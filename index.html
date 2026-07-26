@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HopeHub</title>
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- AOS Animation -->
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<!-- ================= Loader ================= -->
+
+<div id="loader">
+
+    <h1>HopeHub</h1>
+
+    <div class="spinner"></div>
+
+    <p>Loading...</p>
+
+</div>
+
+<!-- ================= Header ================= -->
+
+<header>
+
+    <h2 class="logo">HopeHub</h2>
+
+    <div class="menu-btn" onclick="toggleMenu()">☰</div>
+
+    <nav id="navLinks">
+
+        <a href="#">Home</a>
+        <a href="#featured">Videos</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+
+        <button id="themeBtn" onclick="changeTheme()">
+            🌙
+        </button>
+
+    </nav>
+
+</header>
+
+<!-- ================= Hero Section ================= -->
+
+<section class="hero" data-aos="fade-up">
+
+    <h1>Every Day Deserves a Little Hope ❤️</h1>
+
+    <p>
+        Short inspirational videos to help you feel calmer,
+        stronger, and more hopeful.
+    </p>
+
+    <a href="#featured" class="btn">
+        Watch Videos
+    </a>
+
+    <!-- Quote Card -->
+
+    <div class="quote-card">
+
+        <h3>💙 Quote of the Day</h3>
+
+        <p id="dailyQuote">
+            Your story isn't over yet.
+        </p>
+
+        <button class="copy-btn" onclick="copyQuote()">
+            📋 Copy Quote
+        </button>
+
+        <button class="share-btn" onclick="shareQuote()">
+            📤 Share Quote
+        </button>
+
+    </div>
+
+</section>
+
+<!-- ================= Featured Videos Start ================= -->
+
+<section class="featured" id="featured" data-aos="fade-up">
+
+    <h2>Featured Videos</h2>
+
+    <div class="search-box">
+
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="🔍 Search Videos..."
+            onkeyup="searchVideos()">
+
+    </div>
+
+    <div class="cards">
+        <!-- ================= Video 1 ================= -->
+
+<div class="card video-card" data-aos="zoom-in">
+
+    <a href="https://www.youtube.com/watch?v=mgmVOuLgFB0" target="_blank">
+
+        <div class="video-image">
+            <img src="images/video1.jpg" alt="Never Give Up">
+            <div class="play-btn">▶</div>
+        </div>
+
+    </a>
+
+    <h3>Never Give Up</h3>
+
+    <p>2 min</p>
+
+    <button class="like-btn" onclick="likeVideo(this,'video1')">
+        🤍 Like
+    </button>
+
+</div>
+
+<!-- ================= Video 2 ================= -->
+
+<div class="card video-card" data-aos="zoom-in" data-aos-delay="100">
+
+    <a href="https://www.youtube.com/watch?v=ZXsQAXx_ao0" target="_blank">
+
+        <div class="video-image">
+            <img src="images/video2.jpg" alt="Believe in Yourself">
+            <div class="play-btn">▶</div>
+        </div>
+
+    </a>
+
+    <h3>Believe in Yourself</h3>
+
+    <p>1 min</p>
+
+    <button class="like-btn" onclick="likeVideo(this,'video2')">
+        🤍 Like
+    </button>
+
+</div>
+
+<!-- ================= Video 3 ================= -->
+
+<div class="card video-card" data-aos="zoom-in" data-aos-delay="200">
+
+    <a href="https://www.youtube.com/watch?v=wnHW6o8WMas" target="_blank">
+
+        <div class="video-image">
+            <img src="images/video3.jpg" alt="Keep Smiling">
+            <div class="play-btn">▶</div>
+        </div>
+
+    </a>
+
+    <h3>Keep Smiling</h3>
+
+    <p>3 min</p>
+
+    <button class="like-btn" onclick="likeVideo(this,'video3')">
+        🤍 Like
+    </button>
+
+</div>
+
+<!-- ================= Video 4 ================= -->
+
+<div class="card video-card" data-aos="zoom-in" data-aos-delay="300">
+
+    <a href="https://www.youtube.com/watch?v=UNQhuFL6CWg" target="_blank">
+
+        <div class="video-image">
+            <img src="images/video4.jpg" alt="Dream Big">
+            <div class="play-btn">▶</div>
+        </div>
+
+    </a>
+
+    <h3>Dream Big</h3>
+
+    <p>4 min</p>
+
+    <button class="like-btn" onclick="likeVideo(this,'video4')">
+        🤍 Like
+    </button>
+
+</div>
+
+<!-- ================= Video 5 ================= -->
+
+<div class="card video-card" data-aos="zoom-in" data-aos-delay="400">
+
+    <a href="https://www.youtube.com/watch?v=mgmVOuLgFB0" target="_blank">
+
+        <div class="video-image">
+            <img src="images/video5.jpg" alt="Stay Strong">
+            <div class="play-btn">▶</div>
+        </div>
+
+    </a>
+
+    <h3>Stay Strong</h3>
+
+    <p>3 min</p>
+
+    <button class="like-btn" onclick="likeVideo(this,'video5')">
+        🤍 Like
+    </button>
+
+</div>
+
+<!-- ================= Video 6 ================= -->
+
+<div class="card video-card" data-aos="zoom-in" data-aos-delay="500">
+
+    <a href="https://www.youtube.com/watch?v=ZXsQAXx_ao0" target="_blank">
+
+        <div class="video-image">
+            <img src="images/video6.jpg" alt="Choose Happiness">
+            <div class="play-btn">▶</div>
+        </div>
+
+    </a>
+
+    <h3>Choose Happiness</h3>
+
+    <p>5 min</p>
+
+    <button class="like-btn" onclick="likeVideo(this,'video6')">
+        🤍 Like
+    </button>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ================= About ================= -->
+
+<section class="about" id="about" data-aos="fade-right">
+
+    <h2>About HopeHub</h2>
+
+    <p>
+        HopeHub is a platform created to inspire people through short motivational
+        videos and positive messages. Our mission is to spread hope, confidence,
+        peace, and happiness to everyone.
+    </p>
+
+</section>
+
+<!-- ================= Contact ================= -->
+
+<section class="contact" id="contact" data-aos="fade-left">
+
+    <h2>Contact Us</h2>
+
+    <p>Have a suggestion or want to get in touch? We'd love to hear from you.</p>
+
+    <form>
+
+        <input type="text" placeholder="Your Name" required>
+
+        <input type="email" placeholder="Your Email" required>
+
+        <textarea rows="6" placeholder="Your Message" required></textarea>
+
+        <button type="submit">Send Message</button>
+
+    </form>
+
+</section>
+<!-- ================= Footer ================= -->
+
+<footer data-aos="zoom-in">
+
+    <div class="footer-content">
+
+        <h2>HopeHub</h2>
+
+        <p>
+            Spreading hope, positivity, and inspiration every day.
+        </p>
+
+        <div class="social-links">
+
+            <a href="#" title="Facebook">📘</a>
+            <a href="#" title="Instagram">📷</a>
+            <a href="#" title="YouTube">▶️</a>
+            <a href="#" title="Twitter">🐦</a>
+
+        </div>
+
+        <p class="copyright">
+            © 2026 HopeHub. All Rights Reserved.
+        </p>
+
+    </div>
+
+</footer>
+
+<!-- ================= Back To Top ================= -->
+
+<button id="topBtn" onclick="goTop()">⬆</button>
+
+<!-- ================= JavaScript ================= -->
+
+<script src="js/script.js"></script>
+
+<!-- AOS Animation -->
+
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+
+<script>
+AOS.init({
+    duration:1000,
+    once:true
+});
+</script>
+
+</body>
+
+</html>

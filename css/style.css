@@ -1,0 +1,602 @@
+/* ==========================================
+   HOPEHUB CSS
+   Part 1 - Reset, Body, Loader, Header, Hero
+========================================== */
+
+/* Reset */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+/* Body */
+
+body{
+    background:#0f172a;
+    color:white;
+    overflow-x:hidden;
+}
+
+/* Background Overlay */
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    background:url("../images/hero.jpg") center/cover no-repeat;
+    opacity:.25;
+    z-index:-2;
+}
+
+/* Loader */
+
+#loader{
+    position:fixed;
+    inset:0;
+    background:#0f172a;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    z-index:9999;
+}
+
+#loader h1{
+    font-size:50px;
+    margin-bottom:20px;
+}
+
+#loader p{
+    margin-top:20px;
+    font-size:18px;
+}
+
+.spinner{
+    width:70px;
+    height:70px;
+    border:6px solid rgba(255,255,255,.2);
+    border-top:6px solid #4F7CFF;
+    border-radius:50%;
+    animation:spin 1s linear infinite;
+}
+
+@keyframes spin{
+    from{
+        transform:rotate(0deg);
+    }
+    to{
+        transform:rotate(360deg);
+    }
+}
+
+/* Header */
+
+header{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:20px 60px;
+    background:rgba(0,0,0,.35);
+    backdrop-filter:blur(12px);
+    z-index:1000;
+}
+
+/* Logo */
+
+.logo{
+    font-size:40px;
+    font-weight:700;
+    color:white;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.logo:hover{
+    color:#4F7CFF;
+}
+
+/* Navbar */
+
+nav{
+    display:flex;
+    align-items:center;
+    gap:25px;
+}
+
+nav a{
+    text-decoration:none;
+    color:white;
+    font-size:18px;
+    transition:.3s;
+}
+
+nav a:hover{
+    color:#4F7CFF;
+}
+
+/* Theme Button */
+
+#themeBtn{
+    background:none;
+    border:none;
+    color:white;
+    font-size:22px;
+    cursor:pointer;
+}
+
+/* Mobile Menu */
+
+.menu-btn{
+    display:none;
+    font-size:32px;
+    cursor:pointer;
+}
+
+/* Hero */
+
+.hero{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    text-align:center;
+    padding:120px 20px 60px;
+}
+
+.hero h1{
+    font-size:64px;
+    margin-bottom:20px;
+}
+
+.hero p{
+    max-width:700px;
+    font-size:22px;
+    color:#ddd;
+    line-height:1.7;
+}
+
+/* Main Button */
+
+.btn{
+    display:inline-block;
+    margin-top:35px;
+    background:#4F7CFF;
+    color:white;
+    text-decoration:none;
+    padding:15px 40px;
+    border-radius:50px;
+    transition:.3s;
+}
+
+.btn:hover{
+    background:#2563eb;
+    transform:scale(1.05);
+}
+/* ==========================================
+   Part 2 - Featured, Search, Cards, Quote
+========================================== */
+
+/* Featured Section */
+
+.featured{
+    padding:80px 8%;
+    background:#111827;
+}
+
+.featured h2{
+    text-align:center;
+    font-size:42px;
+    margin-bottom:30px;
+}
+
+/* Search Box */
+
+.search-box{
+    display:flex;
+    justify-content:center;
+    margin-bottom:40px;
+}
+
+.search-box input{
+    width:100%;
+    max-width:500px;
+    padding:15px 20px;
+    border:none;
+    outline:none;
+    border-radius:50px;
+    font-size:16px;
+    background:#1e293b;
+    color:white;
+}
+
+.search-box input::placeholder{
+    color:#94a3b8;
+}
+
+/* Cards */
+
+.cards{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:30px;
+}
+
+.card{
+    width:320px;
+    background:#1e293b;
+    border-radius:20px;
+    overflow:hidden;
+    transition:.3s;
+}
+
+.card:hover{
+    transform:translateY(-10px);
+    box-shadow:0 15px 35px rgba(0,0,0,.4);
+}
+
+.video-image{
+    position:relative;
+}
+
+.video-image img{
+    width:100%;
+    height:220px;
+    object-fit:cover;
+}
+
+/* Play Button */
+
+.play-btn{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    width:70px;
+    height:70px;
+    border-radius:50%;
+    background:rgba(255,255,255,.9);
+    color:#2563eb;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:30px;
+    transition:.3s;
+}
+
+.play-btn:hover{
+    background:#2563eb;
+    color:white;
+    transform:translate(-50%,-50%) scale(1.1);
+}
+
+/* Card Text */
+
+.card h3{
+    padding:18px 20px 10px;
+    font-size:22px;
+}
+
+.card p{
+    padding:0 20px 20px;
+    color:#cbd5e1;
+}
+
+/* Like Button */
+
+.like-btn{
+    width:85%;
+    margin:0 auto 20px;
+    display:block;
+    padding:12px;
+    border:none;
+    border-radius:10px;
+    background:#4F7CFF;
+    color:white;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.like-btn:hover{
+    background:#2563eb;
+}
+
+.like-btn.liked{
+    background:#e11d48;
+}
+
+/* Quote Card */
+
+.quote-card{
+    margin-top:40px;
+    max-width:700px;
+    background:rgba(255,255,255,.08);
+    backdrop-filter:blur(10px);
+    padding:30px;
+    border-radius:20px;
+}
+
+.quote-card h3{
+    color:#FFD166;
+    margin-bottom:15px;
+}
+
+.quote-card p{
+    color:white;
+    margin-bottom:20px;
+}
+
+/* Copy & Share Buttons */
+
+.copy-btn,
+.share-btn{
+    border:none;
+    padding:12px 20px;
+    border-radius:10px;
+    cursor:pointer;
+    margin:8px;
+    transition:.3s;
+}
+
+.copy-btn{
+    background:#4F7CFF;
+    color:white;
+}
+
+.copy-btn:hover{
+    background:#2563eb;
+}
+
+.share-btn{
+    background:#22c55e;
+    color:white;
+}
+
+.share-btn:hover{
+    background:#15803d;
+}
+
+/* Search Hide */
+
+.hide{
+    display:none;
+}
+/* ==========================================
+   Part 3 - About, Contact, Footer, Responsive
+========================================== */
+
+/* About */
+
+.about{
+    padding:80px 8%;
+    background:#0f172a;
+    text-align:center;
+}
+
+.about h2{
+    font-size:42px;
+    margin-bottom:25px;
+}
+
+.about p{
+    max-width:850px;
+    margin:auto;
+    color:#cbd5e1;
+    line-height:1.8;
+    font-size:18px;
+}
+
+/* Contact */
+
+.contact{
+    padding:80px 8%;
+    background:#111827;
+    text-align:center;
+}
+
+.contact h2{
+    font-size:42px;
+    margin-bottom:20px;
+}
+
+.contact p{
+    color:#cbd5e1;
+    margin-bottom:35px;
+}
+
+.contact form{
+    max-width:700px;
+    margin:auto;
+}
+
+.contact input,
+.contact textarea{
+    width:100%;
+    padding:15px;
+    margin-bottom:20px;
+    border:none;
+    border-radius:10px;
+    background:#1e293b;
+    color:white;
+    outline:none;
+}
+
+.contact input::placeholder,
+.contact textarea::placeholder{
+    color:#94a3b8;
+}
+
+.contact button{
+    background:#4F7CFF;
+    color:white;
+    border:none;
+    padding:15px 35px;
+    border-radius:10px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.contact button:hover{
+    background:#2563eb;
+}
+
+/* Footer */
+
+footer{
+    background:#020617;
+    padding:50px 20px;
+    text-align:center;
+}
+
+.footer-content h2{
+    font-size:36px;
+    margin-bottom:15px;
+}
+
+.footer-content p{
+    color:#cbd5e1;
+    margin:10px 0;
+}
+
+.social-links{
+    margin:20px 0;
+}
+
+.social-links a{
+    font-size:30px;
+    text-decoration:none;
+    margin:0 12px;
+    transition:.3s;
+}
+
+.social-links a:hover{
+    transform:scale(1.2);
+}
+
+.copyright{
+    margin-top:20px;
+    color:#94a3b8;
+    font-size:15px;
+}
+
+/* Back To Top */
+
+#topBtn{
+    position:fixed;
+    right:25px;
+    bottom:25px;
+    width:50px;
+    height:50px;
+    border:none;
+    border-radius:50%;
+    background:#4F7CFF;
+    color:white;
+    font-size:20px;
+    cursor:pointer;
+    display:none;
+    z-index:999;
+    transition:.3s;
+}
+
+#topBtn:hover{
+    background:#2563eb;
+    transform:scale(1.1);
+}
+
+/* Light Theme */
+
+body.light{
+    background:#f8fafc;
+    color:#111827;
+}
+
+body.light .featured,
+body.light .contact{
+    background:#e2e8f0;
+}
+
+body.light .about{
+    background:#f8fafc;
+}
+
+body.light .card,
+body.light .search-box input,
+body.light .contact input,
+body.light .contact textarea{
+    background:white;
+    color:#111827;
+}
+
+body.light .card p,
+body.light .about p,
+body.light .contact p{
+    color:#475569;
+}
+
+/* Mobile */
+
+@media(max-width:768px){
+
+    header{
+        padding:18px 20px;
+    }
+
+    .menu-btn{
+        display:block;
+        color:white;
+    }
+
+    nav{
+        display:none;
+        position:absolute;
+        top:80px;
+        left:0;
+        width:100%;
+        background:#111827;
+        flex-direction:column;
+        padding:20px 0;
+    }
+
+    nav.active{
+        display:flex;
+    }
+
+    .hero h1{
+        font-size:42px;
+    }
+
+    .hero p{
+        font-size:18px;
+    }
+
+    .card{
+        width:100%;
+        max-width:360px;
+    }
+
+    .quote-card{
+        width:95%;
+    }
+
+    .copy-btn,
+    .share-btn{
+        width:100%;
+        margin:8px 0;
+    }
+
+    #themeBtn{
+        margin-top:10px;
+    }
+}
