@@ -4,51 +4,129 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HopeHub</title>
 
-    <!-- Google Font -->
+    <!-- SEO TITLE -->
+    <title>HopeHub | Inspirational Videos, Motivation & Daily Hope</title>
+
+    <!-- SEO DESCRIPTION -->
+    <meta
+        name="description"
+        content="HopeHub offers short inspirational videos, motivational messages, positive quotes, and daily encouragement to help you feel calmer, stronger, and more hopeful."
+    >
+
+    <!-- SEO KEYWORDS -->
+    <meta
+        name="keywords"
+        content="inspirational videos, motivational videos, daily motivation, positive quotes, inspirational quotes, hope, positivity, success motivation, mental health motivation, HopeHub"
+    >
+
+    <!-- SEARCH ENGINE INSTRUCTIONS -->
+    <meta name="robots" content="index, follow">
+
+    <!-- CANONICAL URL -->
+    <link
+        rel="canonical"
+        href="https://aliaraz56560-cmd.github.io/HopeHub/"
+    >
+
+    <!-- THEME COLOR -->
+    <meta name="theme-color" content="#020617">
+
+    <!-- OPEN GRAPH / FACEBOOK / WHATSAPP -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="HopeHub | Inspirational Videos, Motivation & Daily Hope">
+    <meta
+        property="og:description"
+        content="Discover short inspirational videos, positive messages, daily quotes, and motivation with HopeHub."
+    >
+    <meta
+        property="og:url"
+        content="https://aliaraz56560-cmd.github.io/HopeHub/"
+    >
+    <meta property="og:site_name" content="HopeHub">
+
+    <!-- TWITTER / X CARD -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="HopeHub | Inspirational Videos & Daily Hope">
+    <meta
+        name="twitter:description"
+        content="Short inspirational videos, positive quotes, and daily motivation to help you feel calmer, stronger, and more hopeful."
+    >
+
+    <!-- GOOGLE FONT -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
 
-    <!-- AOS Animation -->
-    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css">
+    <!-- AOS ANIMATION -->
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/aos@2.3.4/dist/aos.css"
+    >
 
-    <!-- CSS -->
+    <!-- MAIN CSS -->
     <link rel="stylesheet" href="css/style.css">
+
+    <!-- WEBSITE STRUCTURED DATA -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "HopeHub",
+        "url": "https://aliaraz56560-cmd.github.io/HopeHub/",
+        "description": "HopeHub provides short inspirational videos, positive messages, daily quotes, and motivational content."
+    }
+    </script>
+
 </head>
 
 <body>
 
-<!-- ================= Loader ================= -->
+<!-- ==================================================
+     LOADER
+================================================== -->
 
 <div id="loader">
-
     <h1>HopeHub</h1>
-
     <div class="spinner"></div>
-
     <p>Loading...</p>
-
 </div>
 
-<!-- ================= Header ================= -->
+
+<!-- ==================================================
+     HEADER / NAVBAR
+================================================== -->
 
 <header>
 
     <h2 class="logo">HopeHub</h2>
 
-    <div class="menu-btn" onclick="toggleMenu()">☰</div>
+    <div
+        class="menu-btn"
+        onclick="toggleMenu()"
+        aria-label="Open navigation menu"
+    >
+        ☰
+    </div>
 
     <nav id="navLinks">
 
-        <a href="#">Home</a>
+        <a href="#home">Home</a>
         <a href="#featured">Videos</a>
+        <a href="#categories">Categories</a>
+        <a href="#favorites">Favorites</a>
         <a href="#about">About</a>
         <a href="#contact">Contact</a>
 
-        <button id="themeBtn" onclick="changeTheme()">
+        <button
+            id="themeBtn"
+            onclick="changeTheme()"
+            aria-label="Change theme"
+        >
             🌙
         </button>
 
@@ -56,22 +134,161 @@
 
 </header>
 
-<!-- ================= Hero Section ================= -->
 
-<section class="hero" data-aos="fade-up">
+<!-- ==================================================
+     LOGIN / SIGNUP OVERLAY
+================================================== -->
 
-    <h1>Every Day Deserves a Little Hope ❤️</h1>
+<div class="auth-overlay" id="authOverlay">
+
+    <div class="auth-box">
+
+        <span
+            class="close-auth"
+            onclick="closeAuth()"
+            aria-label="Close login"
+        >
+            ×
+        </span>
+
+
+        <!-- LOGIN -->
+
+        <div id="loginForm">
+
+            <h2>Welcome Back 👋</h2>
+
+            <input
+                type="email"
+                id="loginEmail"
+                placeholder="Email"
+                autocomplete="email"
+            >
+
+            <input
+                type="password"
+                id="loginPassword"
+                placeholder="Password"
+                autocomplete="current-password"
+            >
+
+            <button
+                type="button"
+                onclick="loginUser()"
+            >
+                Login
+            </button>
+
+            <p>
+                Don't have an account?
+
+                <a
+                    href="#"
+                    onclick="showSignup(); return false;"
+                >
+                    Sign Up
+                </a>
+            </p>
+
+        </div>
+
+
+        <!-- SIGNUP -->
+
+        <div
+            id="signupForm"
+            style="display:none;"
+        >
+
+            <h2>Create Account ✨</h2>
+
+            <input
+                type="text"
+                id="signupName"
+                placeholder="Full Name"
+                autocomplete="name"
+            >
+
+            <input
+                type="email"
+                id="signupEmail"
+                placeholder="Email"
+                autocomplete="email"
+            >
+
+            <input
+                type="password"
+                id="signupPassword"
+                placeholder="Password"
+                autocomplete="new-password"
+            >
+
+            <button
+                type="button"
+                onclick="signupUser()"
+            >
+                Sign Up
+            </button>
+
+            <p>
+                Already have an account?
+
+                <a
+                    href="#"
+                    onclick="showLogin(); return false;"
+                >
+                    Login
+                </a>
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ==================================================
+     LOGIN BUTTON
+================================================== -->
+
+<button
+    class="login-btn"
+    type="button"
+    aria-label="Login to HopeHub"
+>
+    👤 Login
+</button>
+
+
+<!-- ==================================================
+     HERO SECTION
+================================================== -->
+
+<section
+    class="hero"
+    id="home"
+    data-aos="fade-up"
+>
+
+    <h1>
+        Every Day Deserves a Little Hope ❤️
+    </h1>
 
     <p>
         Short inspirational videos to help you feel calmer,
         stronger, and more hopeful.
     </p>
 
-    <a href="#featured" class="btn">
+    <a
+        href="#featured"
+        class="btn"
+    >
         Watch Videos
     </a>
 
-    <!-- Quote Card -->
+
+    <!-- DAILY QUOTE -->
 
     <div class="quote-card">
 
@@ -81,260 +298,938 @@
             Your story isn't over yet.
         </p>
 
-        <button class="copy-btn" onclick="copyQuote()">
-            📋 Copy Quote
+        <div class="quote-buttons">
+
+            <button
+                class="copy-btn"
+                onclick="copyQuote()"
+                type="button"
+            >
+                📋 Copy Quote
+            </button>
+
+            <button
+                class="share-btn"
+                onclick="shareQuote()"
+                type="button"
+            >
+                📤 Share Quote
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ==================================================
+     CATEGORIES
+================================================== -->
+
+<section
+    class="categories"
+    id="categories"
+>
+
+    <h2>Browse Categories</h2>
+
+    <div class="category-box">
+
+        <button
+            class="category-btn active"
+            type="button"
+        >
+            All
         </button>
 
-        <button class="share-btn" onclick="shareQuote()">
-            📤 Share Quote
+        <button
+            class="category-btn"
+            type="button"
+        >
+            Motivation
+        </button>
+
+        <button
+            class="category-btn"
+            type="button"
+        >
+            Success
+        </button>
+
+        <button
+            class="category-btn"
+            type="button"
+        >
+            Mental Health
+        </button>
+
+        <button
+            class="category-btn"
+            type="button"
+        >
+            Positivity
         </button>
 
     </div>
 
 </section>
 
-<!-- ================= Featured Videos Start ================= -->
 
-<section class="featured" id="featured" data-aos="fade-up">
+<!-- ==================================================
+     FAVORITES
+================================================== -->
 
-    <h2>Featured Videos</h2>
+<section
+    class="favorites"
+    id="favorites"
+>
+
+    <h2>❤️ My Favorite Videos</h2>
+
+    <div
+        id="favoriteContainer"
+        class="cards"
+    >
+
+        <p class="empty-fav">
+            No favorite videos yet.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- ==================================================
+     STATISTICS
+================================================== -->
+
+<section class="stats">
+
+    <div class="stat-box">
+
+        <h2
+            class="counter"
+            data-target="10000"
+        >
+            0
+        </h2>
+
+        <p>Happy Visitors</p>
+
+    </div>
+
+
+    <div class="stat-box">
+
+        <h2
+            class="counter"
+            data-target="500"
+        >
+            0
+        </h2>
+
+        <p>Motivational Videos</p>
+
+    </div>
+
+
+    <div class="stat-box">
+
+        <h2
+            class="counter"
+            data-target="150"
+        >
+            0
+        </h2>
+
+        <p>Daily Quotes</p>
+
+    </div>
+
+
+    <div class="stat-box">
+
+        <h2
+            class="counter"
+            data-target="50"
+        >
+            0
+        </h2>
+
+        <p>Countries Reached</p>
+
+    </div>
+
+</section>
+
+
+<!-- ==================================================
+     FEATURED VIDEOS
+================================================== -->
+
+<section
+    class="featured"
+    id="featured"
+    data-aos="fade-up"
+>
+
+    <h2>Featured Inspirational Videos</h2>
+
+
+    <!-- SEARCH -->
 
     <div class="search-box">
 
         <input
             type="text"
             id="searchInput"
-            placeholder="🔍 Search Videos..."
-            onkeyup="searchVideos()">
+            placeholder="🔎 Search videos..."
+            oninput="searchVideos()"
+            aria-label="Search inspirational videos"
+        >
 
     </div>
 
+
     <div class="cards">
-        <!-- ================= Video 1 ================= -->
 
-<div class="card video-card" data-aos="zoom-in">
 
-    <a href="https://www.youtube.com/watch?v=mgmVOuLgFB0" target="_blank">
+        <!-- VIDEO 1 -->
 
-        <div class="video-image">
-            <img src="images/video1.jpg" alt="Never Give Up">
-            <div class="play-btn">▶</div>
+        <div
+            class="card video-card"
+            data-category="Motivation"
+            data-aos="zoom-in"
+        >
+
+            <a href="video.html?video=crsST0ptxlU">
+
+                <div class="video-image">
+
+                    <img
+                        src="images/video1.jpg"
+                        alt="Keep Going inspirational motivational video"
+                        loading="lazy"
+                    >
+
+                    <div class="play-btn">
+                        ▶
+                    </div>
+
+                </div>
+
+            </a>
+
+            <h3>Keep Going</h3>
+
+            <p>Motivational Video</p>
+
+            <button
+                class="like-btn"
+                onclick="likeVideo(this,'video1')"
+                type="button"
+            >
+                🤍 Like
+            </button>
+
+            <button
+                class="favorite-btn"
+                onclick="addFavorite(
+                    'Keep Going',
+                    'images/video1.jpg',
+                    'video.html?video=crsST0ptxlU',
+                    this
+                )"
+                type="button"
+            >
+                🤍 Favorite
+            </button>
+
         </div>
 
-    </a>
 
-    <h3>Never Give Up</h3>
+        <!-- VIDEO 2 -->
 
-    <p>2 min</p>
+        <div
+            class="card video-card"
+            data-category="Success"
+            data-aos="zoom-in"
+        >
 
-    <button class="like-btn" onclick="likeVideo(this,'video1')">
-        🤍 Like
-    </button>
+            <a href="video.html?video=I_mPoUWBMf4">
 
-</div>
+                <div class="video-image">
 
-<!-- ================= Video 2 ================= -->
+                    <img
+                        src="images/video2.jpg"
+                        alt="Believe in Your Power success motivational video"
+                        loading="lazy"
+                    >
 
-<div class="card video-card" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="play-btn">
+                        ▶
+                    </div>
 
-    <a href="https://www.youtube.com/watch?v=ZXsQAXx_ao0" target="_blank">
+                </div>
 
-        <div class="video-image">
-            <img src="images/video2.jpg" alt="Believe in Yourself">
-            <div class="play-btn">▶</div>
+            </a>
+
+            <h3>Believe in Your Power</h3>
+
+            <p>Success Inspiration</p>
+
+            <button
+                class="like-btn"
+                onclick="likeVideo(this,'video2')"
+                type="button"
+            >
+                🤍 Like
+            </button>
+
+            <button
+                class="favorite-btn"
+                onclick="addFavorite(
+                    'Believe in Your Power',
+                    'images/video2.jpg',
+                    'video.html?video=Cpc-t-Uwv1I',
+                    this
+                )"
+                type="button"
+            >
+                🤍 Favorite
+            </button>
+
         </div>
 
-    </a>
 
-    <h3>Believe in Yourself</h3>
+        <!-- VIDEO 3 -->
 
-    <p>1 min</p>
+        <div
+            class="card video-card"
+            data-category="Mental Health"
+            data-aos="zoom-in"
+        >
 
-    <button class="like-btn" onclick="likeVideo(this,'video2')">
-        🤍 Like
-    </button>
+            <a href="video.html?video=UF8uR6Z6KLc">
 
-</div>
+                <div class="video-image">
 
-<!-- ================= Video 3 ================= -->
+                    <img
+                        src="images/video3.jpg"
+                        alt="Keep Moving Forward inspirational video"
+                        loading="lazy"
+                    >
 
-<div class="card video-card" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="play-btn">
+                        ▶
+                    </div>
 
-    <a href="https://www.youtube.com/watch?v=wnHW6o8WMas" target="_blank">
+                </div>
 
-        <div class="video-image">
-            <img src="images/video3.jpg" alt="Keep Smiling">
-            <div class="play-btn">▶</div>
+            </a>
+
+            <h3>Keep Moving Forward</h3>
+
+            <p>Inspirational Message</p>
+
+            <button
+                class="like-btn"
+                onclick="likeVideo(this,'video3')"
+                type="button"
+            >
+                🤍 Like
+            </button>
+
+            <button
+                class="favorite-btn"
+                onclick="addFavorite(
+                    'Keep Moving Forward',
+                    'images/video3.jpg',
+                    'video.html?video=UF8uR6Z6KLc',
+                    this
+                )"
+                type="button"
+            >
+                🤍 Favorite
+            </button>
+
         </div>
 
-    </a>
 
-    <h3>Keep Smiling</h3>
+        <!-- VIDEO 4 -->
 
-    <p>3 min</p>
+        <div
+            class="card video-card"
+            data-category="Positivity"
+            data-aos="zoom-in"
+        >
 
-    <button class="like-btn" onclick="likeVideo(this,'video3')">
-        🤍 Like
-    </button>
+            <a href="video.html?video=ZToicYcHIOU">
 
-</div>
+                <div class="video-image">
 
-<!-- ================= Video 4 ================= -->
+                    <img
+                        src="images/video4.jpg"
+                        alt="Stay Positive positive thinking video"
+                        loading="lazy"
+                    >
 
-<div class="card video-card" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="play-btn">
+                        ▶
+                    </div>
 
-    <a href="https://www.youtube.com/watch?v=UNQhuFL6CWg" target="_blank">
+                </div>
 
-        <div class="video-image">
-            <img src="images/video4.jpg" alt="Dream Big">
-            <div class="play-btn">▶</div>
+            </a>
+
+            <h3>Stay Positive</h3>
+
+            <p>Positive Thinking</p>
+
+            <button
+                class="like-btn"
+                onclick="likeVideo(this,'video4')"
+                type="button"
+            >
+                🤍 Like
+            </button>
+
+            <button
+                class="favorite-btn"
+                onclick="addFavorite(
+                    'Stay Positive',
+                    'images/video4.jpg',
+                    'video.html?video=ZToicYcHIOU',
+                    this
+                )"
+                type="button"
+            >
+                🤍 Favorite
+            </button>
+
         </div>
 
-    </a>
 
-    <h3>Dream Big</h3>
+        <!-- VIDEO 5 -->
 
-    <p>4 min</p>
+        <div
+            class="card video-card"
+            data-category="Motivation"
+            data-aos="zoom-in"
+        >
 
-    <button class="like-btn" onclick="likeVideo(this,'video4')">
-        🤍 Like
-    </button>
+            <a href="video.html?video=suvwogCC7PI">
 
-</div>
+                <div class="video-image">
 
-<!-- ================= Video 5 ================= -->
+                    <img
+                        src="images/video5.jpg"
+                        alt="Never Give Up motivational video"
+                        loading="lazy"
+                    >
 
-<div class="card video-card" data-aos="zoom-in" data-aos-delay="400">
+                    <div class="play-btn">
+                        ▶
+                    </div>
 
-    <a href="https://www.youtube.com/watch?v=mgmVOuLgFB0" target="_blank">
+                </div>
 
-        <div class="video-image">
-            <img src="images/video5.jpg" alt="Stay Strong">
-            <div class="play-btn">▶</div>
+            </a>
+
+            <h3>Never Give Up</h3>
+
+            <p>Daily Motivation</p>
+
+            <button
+                class="like-btn"
+                onclick="likeVideo(this,'video5')"
+                type="button"
+            >
+                🤍 Like
+            </button>
+
+            <button
+                class="favorite-btn"
+                onclick="addFavorite(
+                    'Never Give Up',
+                    'images/video5.jpg',
+                    'video.html?video=mgmVOuLgFB0',
+                    this
+                )"
+                type="button"
+            >
+                🤍 Favorite
+            </button>
+
         </div>
 
-    </a>
 
-    <h3>Stay Strong</h3>
+        <!-- VIDEO 6 -->
 
-    <p>3 min</p>
+        <div
+            class="card video-card"
+            data-category="Success"
+            data-aos="zoom-in"
+        >
 
-    <button class="like-btn" onclick="likeVideo(this,'video5')">
-        🤍 Like
-    </button>
+            <a href="video.html?video=M00D85NmCwk">
 
-</div>
+                <div class="video-image">
 
-<!-- ================= Video 6 ================= -->
+                    <img
+                        src="images/video6.jpg"
+                        alt="Your Best Chapter Is Coming success motivation video"
+                        loading="lazy"
+                    >
 
-<div class="card video-card" data-aos="zoom-in" data-aos-delay="500">
+                    <div class="play-btn">
+                        ▶
+                    </div>
 
-    <a href="https://www.youtube.com/watch?v=ZXsQAXx_ao0" target="_blank">
+                </div>
 
-        <div class="video-image">
-            <img src="images/video6.jpg" alt="Choose Happiness">
-            <div class="play-btn">▶</div>
+            </a>
+
+            <h3>Your Best Chapter Is Coming</h3>
+
+            <p>Success Motivation</p>
+
+            <button
+                class="like-btn"
+                onclick="likeVideo(this,'video6')"
+                type="button"
+            >
+                🤍 Like
+            </button>
+
+            <button
+                class="favorite-btn"
+                onclick="addFavorite(
+                    'Your Best Chapter Is Coming',
+                    'images/video6.jpg',
+                    'video.html?video=ZXsQAXx_ao0',
+                    this
+                )"
+                type="button"
+            >
+                🤍 Favorite
+            </button>
+
         </div>
 
-    </a>
-
-    <h3>Choose Happiness</h3>
-
-    <p>5 min</p>
-
-    <button class="like-btn" onclick="likeVideo(this,'video6')">
-        🤍 Like
-    </button>
-
-</div>
-
-</div>
+    </div>
 
 </section>
 
-<!-- ================= About ================= -->
 
-<section class="about" id="about" data-aos="fade-right">
+<!-- ==================================================
+     ABOUT SECTION
+================================================== -->
+
+<section
+    class="about"
+    id="about"
+    data-aos="fade-up"
+>
 
     <h2>About HopeHub</h2>
 
     <p>
-        HopeHub is a platform created to inspire people through short motivational
-        videos and positive messages. Our mission is to spread hope, confidence,
-        peace, and happiness to everyone.
+        HopeHub is a place for short inspirational videos,
+        positive messages, and daily motivation.
+        Our goal is to help people feel calmer,
+        stronger, and more hopeful.
     </p>
 
 </section>
 
-<!-- ================= Contact ================= -->
 
-<section class="contact" id="contact" data-aos="fade-left">
+<!-- ==================================================
+     TESTIMONIALS
+================================================== -->
 
-    <h2>Contact Us</h2>
+<section
+    class="testimonials"
+    data-aos="fade-up"
+>
 
-    <p>Have a suggestion or want to get in touch? We'd love to hear from you.</p>
+    <h2>What People Say ❤️</h2>
 
-    <form>
+    <div class="testimonial-container">
 
-        <input type="text" placeholder="Your Name" required>
+        <div class="testimonial-card active">
 
-        <input type="email" placeholder="Your Email" required>
+            <p>
+                "HopeHub gives me motivation whenever
+                I am having a difficult day."
+            </p>
 
-        <textarea rows="6" placeholder="Your Message" required></textarea>
+            <h4>— Sarah</h4>
 
-        <button type="submit">Send Message</button>
+        </div>
+
+
+        <div class="testimonial-card">
+
+            <p>
+                "The short videos are simple,
+                positive, and really helpful."
+            </p>
+
+            <h4>— Ahmed</h4>
+
+        </div>
+
+
+        <div class="testimonial-card">
+
+            <p>
+                "I love the daily quotes.
+                They always give me hope."
+            </p>
+
+            <h4>— Emily</h4>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ==================================================
+     FAQ
+================================================== -->
+
+<section
+    class="faq"
+    data-aos="fade-up"
+>
+
+    <h2>Frequently Asked Questions</h2>
+
+
+    <div class="faq-item">
+
+        <button
+            class="faq-question"
+            type="button"
+        >
+
+            What is HopeHub?
+
+            <span>+</span>
+
+        </button>
+
+        <div class="faq-answer">
+
+            <p>
+                HopeHub is an inspirational platform
+                featuring short motivational videos,
+                positive quotes, and uplifting content.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="faq-item">
+
+        <button
+            class="faq-question"
+            type="button"
+        >
+
+            Can I save my favorite videos?
+
+            <span>+</span>
+
+        </button>
+
+        <div class="faq-answer">
+
+            <p>
+                Yes. Click the Favorite button on any
+                video and it will be saved in your browser.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="faq-item">
+
+        <button
+            class="faq-question"
+            type="button"
+        >
+
+            Do I need an account?
+
+            <span>+</span>
+
+        </button>
+
+        <div class="faq-answer">
+
+            <p>
+                You can watch videos without an account.
+                An account can be used for HopeHub features
+                such as login and personalization.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="faq-item">
+
+        <button
+            class="faq-question"
+            type="button"
+        >
+
+            Can I share a quote?
+
+            <span>+</span>
+
+        </button>
+
+        <div class="faq-answer">
+
+            <p>
+                Yes. Use the Share Quote button
+                to share the daily inspirational quote.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ==================================================
+     CONTACT SECTION
+================================================== -->
+
+<section
+    class="contact"
+    id="contact"
+    data-aos="fade-up"
+>
+
+    <h2>Contact HopeHub 💙</h2>
+
+    <p>
+        Have a question, suggestion, or message?
+        We'd love to hear from you.
+    </p>
+
+    <form
+        class="contact-form"
+        id="contactForm"
+    >
+
+        <input
+            type="text"
+            id="contactName"
+            placeholder="Your Name"
+            required
+        >
+
+        <input
+            type="email"
+            id="contactEmail"
+            placeholder="Your Email"
+            required
+        >
+
+        <textarea
+            id="contactMessage"
+            rows="5"
+            placeholder="Write your message..."
+            required
+        ></textarea>
+
+        <button
+            type="submit"
+            class="btn"
+        >
+            📩 Send Message
+        </button>
 
     </form>
 
 </section>
-<!-- ================= Footer ================= -->
 
-<footer data-aos="zoom-in">
+
+<!-- ==================================================
+     NEWSLETTER
+================================================== -->
+
+<section
+    class="newsletter"
+    data-aos="fade-up"
+>
+
+    <h2>Stay Inspired 💙</h2>
+
+    <p>
+        Subscribe to receive inspirational
+        messages and new HopeHub updates.
+    </p>
+
+    <form class="newsletter-form">
+
+        <input
+            type="email"
+            placeholder="Enter your email"
+            required
+        >
+
+        <button type="submit">
+            Subscribe
+        </button>
+
+    </form>
+
+</section>
+
+
+<!-- ==================================================
+     FOOTER
+================================================== -->
+
+<footer>
 
     <div class="footer-content">
 
-        <h2>HopeHub</h2>
 
-        <p>
-            Spreading hope, positivity, and inspiration every day.
-        </p>
+        <!-- FOOTER ABOUT -->
 
-        <div class="social-links">
+        <div class="footer-about">
 
-            <a href="#" title="Facebook">📘</a>
-            <a href="#" title="Instagram">📷</a>
-            <a href="#" title="YouTube">▶️</a>
-            <a href="#" title="Twitter">🐦</a>
+            <h2>HopeHub ❤️</h2>
+
+            <p>
+                A little hope can make a big difference.
+                Keep believing, keep growing,
+                and never give up.
+            </p>
 
         </div>
 
-        <p class="copyright">
-            © 2026 HopeHub. All Rights Reserved.
+
+        <!-- QUICK LINKS -->
+
+        <div class="footer-links">
+
+            <h3>Quick Links</h3>
+
+            <a href="#home">Home</a>
+            <a href="#featured">Videos</a>
+            <a href="#categories">Categories</a>
+            <a href="#favorites">Favorites</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+
+        </div>
+
+
+        <!-- SOCIAL LINKS -->
+
+        <div class="footer-social">
+
+            <h3>Follow HopeHub</h3>
+
+            <div class="social-links">
+
+                <a
+                    href="#"
+                    aria-label="Facebook"
+                >
+                    Facebook
+                </a>
+
+                <a
+                    href="#"
+                    aria-label="Instagram"
+                >
+                    Instagram
+                </a>
+
+                <a
+                    href="#"
+                    aria-label="YouTube"
+                >
+                    YouTube
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- FOOTER BOTTOM -->
+
+    <div class="footer-bottom">
+
+        <p>
+            © 2026 HopeHub. All rights reserved.
+        </p>
+
+        <p>
+            Made with ❤️ for a more hopeful world.
         </p>
 
     </div>
 
 </footer>
 
-<!-- ================= Back To Top ================= -->
 
-<button id="topBtn" onclick="goTop()">⬆</button>
+<!-- ==================================================
+     BACK TO TOP BUTTON
+================================================== -->
 
-<!-- ================= JavaScript ================= -->
+<button
+    id="topBtn"
+    onclick="goTop()"
+    aria-label="Back to top"
+>
+    ↑
+</button>
 
-<script src="js/script.js"></script>
 
-<!-- AOS Animation -->
+<!-- ==================================================
+     AOS JAVASCRIPT
+================================================== -->
 
 <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
 
 <script>
-AOS.init({
-    duration:1000,
-    once:true
-});
+
+    AOS.init({
+        duration: 800,
+        once: true
+    });
+
 </script>
 
-</body>
 
+<!-- ==================================================
+     MAIN JAVASCRIPT
+================================================== -->
+
+<script src="js/script.js"></script>
+
+</body>
 </html>
