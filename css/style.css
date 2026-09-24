@@ -2102,3 +2102,75 @@ body.light .video-details p {
 
 }
 ```
+
+/* =========================================
+   LEGAL PAGES
+========================================= */
+
+.legal-page {
+    width: 100%;
+    padding: 110px 20px 60px;
+}
+
+.legal-container {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.legal-container h1 {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.legal-updated {
+    text-align: center;
+    opacity: 0.7;
+    margin-bottom: 35px;
+}
+
+.legal-container h2 {
+    margin-top: 35px;
+    margin-bottom: 12px;
+}
+
+.legal-container p {
+    line-height: 1.8;
+    margin-bottom: 15px;
+}
+
+.legal-container ul {
+    margin: 10px 0 20px 25px;
+    line-height: 1.9;
+}
+
+.legal-container li {
+    margin-bottom: 5px;
+}
+
+.legal-back {
+    text-align: center;
+    margin-top: 40px;
+}
+
+@media (max-width: 600px) {
+
+    .legal-page {
+        padding: 95px 15px 40px;
+    }
+
+    .legal-container {
+        padding: 25px 20px;
+    }
+
+    .legal-container h1 {
+        font-size: 28px;
+    }
+
+    .legal-container h2 {
+        font-size: 21px;
+    }
+}
