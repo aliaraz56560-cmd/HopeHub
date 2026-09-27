@@ -1,224 +1,326 @@
-/* ==================================================
-   HOPEHUB - MAIN JAVASCRIPT
-================================================== */
+/* =========================================================
+   HOPEHUB - COMPLETE JAVASCRIPT
+   Features:
+   - Loader
+   - Mobile menu
+   - Theme
+   - Login / Signup
+   - Daily quotes
+   - Search
+   - Categories
+   - Likes
+   - Favorites
+   - Video views
+   - Video tracking/counts
+   - Google Analytics events
+   - Stats counters
+   - Testimonials
+   - FAQ
+   - Contact
+   - Newsletter
+   - Back to top
+   - Video page
+========================================================= */
 
 
-/* ==================================================
+/* =========================================================
+   VIDEO DATABASE
+========================================================= */
+
+const HOPEHUB_VIDEOS = {
+    "crsST0ptxlU": {
+        title: "Keep Going 🌟",
+        description: "No matter how difficult life feels, keep moving forward. Every small step matters.",
+        category: "Motivation",
+        image: "images/video1.jpg"
+    },
+
+    "I_mPoUWBMf4": {
+        title: "Believe in Your Power 💙",
+        description: "Believe in yourself, your abilities, and the future you are creating.",
+        category: "Success",
+        image: "images/video2.jpg"
+    },
+
+    "UF8uR6Z6KLc": {
+        title: "Keep Moving Forward ❤️",
+        description: "Difficult days do not define your whole story. Keep moving forward with hope.",
+        category: "Mental Health",
+        image: "images/video3.jpg"
+    },
+
+    "ZToicYcHIOU": {
+        title: "Stay Positive ☀️",
+        description: "A positive mindset can help you see new possibilities even during difficult moments.",
+        category: "Positivity",
+        image: "images/video4.jpg"
+    },
+
+    "suvwogCC7PI": {
+        title: "Never Give Up 🔥",
+        description: "Your journey may be difficult, but giving up is not the end you deserve.",
+        category: "Motivation",
+        image: "images/video5.jpg"
+    },
+
+    "M00D85NmCwk": {
+        title: "Your Best Chapter Is Coming ✨",
+        description: "Your current situation is not your final destination. Better chapters can still come.",
+        category: "Success",
+        image: "images/video6.jpg"
+    }
+};
+
+
+/* =========================================================
+   LEGACY VIDEO KEYS
+   Old HTML uses video1, video2 etc.
+========================================================= */
+
+const VIDEO_KEY_MAP = {
+    video1: "crsST0ptxlU",
+    video2: "I_mPoUWBMf4",
+    video3: "UF8uR6Z6KLc",
+    video4: "ZToicYcHIOU",
+    video5: "suvwogCC7PI",
+    video6: "M00D85NmCwk"
+};
+
+
+function normalizeVideoId(videoId) {
+    return VIDEO_KEY_MAP[videoId] || videoId;
+}
+
+
+/* =========================================================
+   GOOGLE ANALYTICS
+========================================================= */
+
+function trackGAEvent(eventName, parameters = {}) {
+
+    if (typeof window.gtag === "function") {
+
+        window.gtag("event", eventName, parameters);
+
+    }
+}
+
+
+/* =========================================================
+   LOCAL STORAGE HELPERS
+========================================================= */
+
+function getVideoStats() {
+
+    try {
+
+        return JSON.parse(
+            localStorage.getItem("hopehubVideoStats")
+        ) || {};
+
+    } catch (error) {
+
+        return {};
+
+    }
+}
+
+
+function saveVideoStats(stats) {
+
+    localStorage.setItem(
+        "hopehubVideoStats",
+        JSON.stringify(stats)
+    );
+}
+
+
+function getSingleVideoStats(videoId) {
+
+    const stats = getVideoStats();
+
+    if (!stats[videoId]) {
+
+        stats[videoId] = {
+            views: 0,
+            likes: 0,
+            favorites: 0
+        };
+
+        saveVideoStats(stats);
+    }
+
+    return stats[videoId];
+}
+
+
+/* =========================================================
    PAGE LOADER
-================================================== */
+========================================================= */
 
 window.addEventListener("load", function () {
 
     const loader = document.getElementById("loader");
 
     if (loader) {
+
         setTimeout(function () {
+
             loader.style.opacity = "0";
-            loader.style.visibility = "hidden";
+
+            setTimeout(function () {
+
+                loader.style.display = "none";
+
+            }, 300);
+
         }, 500);
     }
-
 });
 
 
-/* ==================================================
+/* =========================================================
    MOBILE MENU
-================================================== */
+========================================================= */
 
 function toggleMenu() {
 
     const navLinks = document.getElementById("navLinks");
 
-    if (!navLinks) return;
+    if (navLinks) {
 
-    navLinks.classList.toggle("active");
+        navLinks.classList.toggle("active");
 
-}
-
-
-/* Close mobile menu when clicking a navigation link */
-
-document.addEventListener("DOMContentLoaded", function () {
-
-    const navLinks = document.getElementById("navLinks");
-
-    if (!navLinks) return;
-
-    const links = navLinks.querySelectorAll("a");
-
-    links.forEach(function (link) {
-
-        link.addEventListener("click", function () {
-
-            navLinks.classList.remove("active");
-
-        });
-
-    });
-
-});
-
-
-// ===============================
-// LIGHT / DARK MODE
-// ===============================
-
-function changeTheme() {
-    document.body.classList.toggle("light");
-
-    const btn = document.getElementById("themeBtn");
-
-    if (document.body.classList.contains("light")) {
-        btn.textContent = "🌙";
-        localStorage.setItem("hopehubTheme", "light");
-    } else {
-        btn.textContent = "🌞";
-        localStorage.setItem("hopehubTheme", "dark");
     }
 }
 
-// Save theme after refresh
-document.addEventListener("DOMContentLoaded", function () {
-    const savedTheme = localStorage.getItem("hopehubTheme");
-    const btn = document.getElementById("themeBtn");
 
-    if (savedTheme === "light") {
-        document.body.classList.add("light");
+/* =========================================================
+   THEME
+========================================================= */
 
-        if (btn) {
-            btn.textContent = "🌙";
-        }
-    }
-});
+function applySavedTheme() {
 
+    const savedTheme =
+        localStorage.getItem("hopehubTheme") || "dark";
 
-/* Load saved theme */
+    const isLight = savedTheme === "light";
 
-document.addEventListener("DOMContentLoaded", function () {
+    document.body.classList.toggle("light", isLight);
 
-    const savedTheme = localStorage.getItem("hopehubTheme");
+    /*
+       Also keeps compatibility if your CSS uses light-mode.
+    */
+    document.body.classList.toggle("light-mode", isLight);
 
     const themeBtn = document.getElementById("themeBtn");
 
-    if (savedTheme === "light") {
+    if (themeBtn) {
 
-        document.body.classList.add("light-mode");
-
-        if (themeBtn) {
-            themeBtn.textContent = "☀️";
-        }
+        themeBtn.textContent = isLight ? "☀️" : "🌙";
 
     }
-
-});
-
-
-/* ==================================================
-   AUTH OVERLAY
-================================================== */
-
-const loginButton = document.querySelector(".login-btn");
-
-if (loginButton) {
-
-    loginButton.addEventListener("click", function () {
-
-        const overlay = document.getElementById("authOverlay");
-
-        if (overlay) {
-            overlay.style.display = "flex";
-        }
-
-    });
-
 }
 
 
-/* Close authentication window */
+function changeTheme() {
+
+    const isCurrentlyLight =
+        document.body.classList.contains("light");
+
+    const newTheme =
+        isCurrentlyLight ? "dark" : "light";
+
+    localStorage.setItem(
+        "hopehubTheme",
+        newTheme
+    );
+
+    applySavedTheme();
+}
+
+
+/* =========================================================
+   AUTH
+========================================================= */
+
+function openAuth() {
+
+    const overlay =
+        document.getElementById("authOverlay");
+
+    if (overlay) {
+
+        overlay.style.display = "flex";
+
+    }
+}
+
 
 function closeAuth() {
 
-    const overlay = document.getElementById("authOverlay");
+    const overlay =
+        document.getElementById("authOverlay");
 
     if (overlay) {
+
         overlay.style.display = "none";
-    }
 
+    }
 }
 
-
-/* Show Login */
-
-function showLogin() {
-
-    const loginForm = document.getElementById("loginForm");
-    const signupForm = document.getElementById("signupForm");
-
-    if (loginForm) {
-        loginForm.style.display = "block";
-    }
-
-    if (signupForm) {
-        signupForm.style.display = "none";
-    }
-
-}
-
-
-/* Show Signup */
 
 function showSignup() {
 
-    const loginForm = document.getElementById("loginForm");
-    const signupForm = document.getElementById("signupForm");
+    const loginBox =
+        document.getElementById("loginForm");
 
-    if (loginForm) {
-        loginForm.style.display = "none";
-    }
+    const signupBox =
+        document.getElementById("signupForm");
 
-    if (signupForm) {
-        signupForm.style.display = "block";
-    }
+    if (loginBox) loginBox.style.display = "none";
 
+    if (signupBox) signupBox.style.display = "block";
 }
 
 
-/* ==================================================
-   SIGNUP
-================================================== */
+function showLogin() {
+
+    const loginBox =
+        document.getElementById("loginForm");
+
+    const signupBox =
+        document.getElementById("signupForm");
+
+    if (loginBox) loginBox.style.display = "block";
+
+    if (signupBox) signupBox.style.display = "none";
+}
+
 
 function signupUser() {
 
-    const name = document.getElementById("signupName");
-    const email = document.getElementById("signupEmail");
-    const password = document.getElementById("signupPassword");
+    const name =
+        document.getElementById("signupName")?.value.trim();
 
-    if (!name || !email || !password) return;
+    const email =
+        document.getElementById("signupEmail")?.value.trim();
 
-    const userName = name.value.trim();
-    const userEmail = email.value.trim();
-    const userPassword = password.value.trim();
+    const password =
+        document.getElementById("signupPassword")?.value;
 
-    if (!userName || !userEmail || !userPassword) {
+    if (!name || !email || !password) {
 
-        alert("Please fill in all fields.");
-
-        return;
-    }
-
-    if (userPassword.length < 6) {
-
-        alert("Password must be at least 6 characters.");
+        alert("Please fill all fields.");
 
         return;
+
     }
 
     const user = {
-
-        name: userName,
-        email: userEmail,
-        password: userPassword
-
+        name: name,
+        email: email,
+        password: password
     };
 
     localStorage.setItem(
@@ -226,47 +328,46 @@ function signupUser() {
         JSON.stringify(user)
     );
 
-    alert("Account created successfully! 🎉");
+    localStorage.setItem(
+        "hopehubLoggedIn",
+        "true"
+    );
 
-    name.value = "";
-    email.value = "";
-    password.value = "";
+    alert("Account created successfully!");
 
-    showLogin();
+    closeAuth();
 
+    updateLoginButton();
 }
 
 
-/* ==================================================
-   LOGIN
-================================================== */
-
 function loginUser() {
 
-    const email = document.getElementById("loginEmail");
-    const password = document.getElementById("loginPassword");
+    const email =
+        document.getElementById("loginEmail")?.value.trim();
 
-    if (!email || !password) return;
+    const password =
+        document.getElementById("loginPassword")?.value;
 
-    const userEmail = email.value.trim();
-    const userPassword = password.value.trim();
+    let user = null;
 
-    const savedUser = localStorage.getItem("hopehubUser");
+    try {
 
-    if (!savedUser) {
+        user =
+            JSON.parse(
+                localStorage.getItem("hopehubUser")
+            );
 
-        alert("No account found. Please sign up first.");
+    } catch (error) {
 
-        showSignup();
+        user = null;
 
-        return;
     }
 
-    const user = JSON.parse(savedUser);
-
     if (
-        user.email === userEmail &&
-        user.password === userPassword
+        user &&
+        user.email === email &&
+        user.password === password
     ) {
 
         localStorage.setItem(
@@ -274,99 +375,108 @@ function loginUser() {
             "true"
         );
 
-        alert(
-            "Welcome back, " +
-            user.name +
-            "! 👋"
-        );
+        alert("Login successful!");
 
         closeAuth();
-
-        email.value = "";
-        password.value = "";
 
         updateLoginButton();
 
     } else {
 
-        alert("Incorrect email or password.");
+        alert("Invalid email or password.");
 
     }
-
 }
 
 
-/* Update login button */
-
 function updateLoginButton() {
 
-    const button = document.querySelector(".login-btn");
+    const button =
+        document.querySelector(".login-btn");
 
     if (!button) return;
+
+    let user = null;
+
+    try {
+
+        user =
+            JSON.parse(
+                localStorage.getItem("hopehubUser")
+            );
+
+    } catch (error) {
+
+        user = null;
+
+    }
 
     const loggedIn =
         localStorage.getItem("hopehubLoggedIn") === "true";
 
-    if (loggedIn) {
+    if (loggedIn && user) {
 
-        const savedUser =
-            localStorage.getItem("hopehubUser");
-
-        if (savedUser) {
-
-            const user = JSON.parse(savedUser);
-
-            button.textContent =
-                "👋 " + user.name;
-
-        }
+        button.textContent =
+            `👋 ${user.name}`;
 
     } else {
 
-        button.textContent = "👤 Login";
+        button.textContent =
+            "👤 Login";
 
     }
-
 }
 
 
-document.addEventListener(
-    "DOMContentLoaded",
-    updateLoginButton
-);
-
-
-/* ==================================================
+/* =========================================================
    DAILY QUOTES
-================================================== */
+========================================================= */
 
-const quotes = [
+const dailyQuotes = [
+
     "Your story isn't over yet.",
-    "Difficult roads often lead to beautiful destinations.",
-    "Every small step forward is still progress.",
-    "Believe in yourself and never give up.",
-    "You are stronger than you think.",
+
+    "Small steps every day create big changes.",
+
+    "Believe in yourself even when nobody else does.",
+
+    "You are stronger than the challenges you face.",
+
     "Better days are coming.",
-    "Keep going, even when it feels hard.",
-    "Your future is worth fighting for."
+
+    "Never give up on yourself.",
+
+    "Your future needs you to keep going.",
+
+    "You can start again at any moment.",
+
+    "Progress is still progress, no matter how small.",
+
+    "Hope can begin with one small thought.",
+
+    "You have survived difficult days before.",
+
+    "Your best chapter may still be ahead."
+
 ];
 
+
 function showRandomQuote() {
-    const quoteElement = document.getElementById("dailyQuote");
+
+    const quoteElement =
+        document.getElementById("dailyQuote");
 
     if (!quoteElement) return;
 
-    const randomIndex = Math.floor(Math.random() * quotes.length);
-    quoteElement.textContent = quotes[randomIndex];
+    const randomIndex =
+        Math.floor(
+            Math.random() * dailyQuotes.length
+        );
+
+    quoteElement.textContent =
+        dailyQuotes[randomIndex];
 }
 
-document.addEventListener("DOMContentLoaded", function () {
-    showRandomQuote();
-});
-
-/* ==================================================
-   COPY QUOTE
-================================================== */
 
 function copyQuote() {
 
@@ -376,34 +486,21 @@ function copyQuote() {
     if (!quoteElement) return;
 
     const quote =
-        quoteElement.textContent.trim();
+        quoteElement.textContent;
 
-    if (navigator.clipboard) {
+    navigator.clipboard.writeText(quote)
+        .then(function () {
 
-        navigator.clipboard.writeText(quote)
-            .then(function () {
+            alert("Quote copied!");
 
-                alert("Quote copied! 📋");
+        })
+        .catch(function () {
 
-            })
-            .catch(function () {
+            alert("Unable to copy quote.");
 
-                alert("Unable to copy the quote.");
-
-            });
-
-    } else {
-
-        alert(quote);
-
-    }
-
+        });
 }
 
-
-/* ==================================================
-   SHARE QUOTE
-================================================== */
 
 function shareQuote() {
 
@@ -413,35 +510,32 @@ function shareQuote() {
     if (!quoteElement) return;
 
     const quote =
-        quoteElement.textContent.trim();
+        quoteElement.textContent;
 
     if (navigator.share) {
 
         navigator.share({
-
-            title: "HopeHub Quote",
+            title: "HopeHub Daily Quote",
             text: quote,
             url: window.location.href
-
-        }).catch(function () {});
+        });
 
     } else {
 
-        copyQuote();
+        navigator.clipboard.writeText(quote)
+            .then(function () {
 
-        alert(
-            "Sharing is not supported here. " +
-            "The quote has been copied instead."
-        );
+                alert("Quote copied. You can share it anywhere!");
+
+            });
 
     }
-
 }
 
 
-/* ==================================================
-   SEARCH VIDEOS
-================================================== */
+/* =========================================================
+   SEARCH
+========================================================= */
 
 function searchVideos() {
 
@@ -450,7 +544,7 @@ function searchVideos() {
 
     if (!input) return;
 
-    const searchTerm =
+    const searchText =
         input.value.toLowerCase().trim();
 
     const cards =
@@ -459,172 +553,412 @@ function searchVideos() {
     cards.forEach(function (card) {
 
         const title =
-            card.querySelector("h3");
+            card.querySelector("h3")?.textContent
+                .toLowerCase() || "";
 
         const description =
-            card.querySelector("p");
+            card.querySelector("p")?.textContent
+                .toLowerCase() || "";
 
         const category =
-            card.dataset.category || "";
+            card.dataset.category?.toLowerCase() || "";
 
-        const titleText =
-            title
-                ? title.textContent.toLowerCase()
-                : "";
+        const matches =
+            title.includes(searchText) ||
+            description.includes(searchText) ||
+            category.includes(searchText);
 
-        const descriptionText =
-            description
-                ? description.textContent.toLowerCase()
-                : "";
-
-        const categoryText =
-            category.toLowerCase();
-
-        const found =
-            titleText.includes(searchTerm) ||
-            descriptionText.includes(searchTerm) ||
-            categoryText.includes(searchTerm);
-
-        card.style.display =
-            found ? "" : "none";
+        card.classList.toggle(
+            "hide",
+            !matches
+        );
 
     });
-
 }
 
 
-/* ==================================================
+/* =========================================================
    CATEGORY FILTER
-================================================== */
+========================================================= */
 
-document.addEventListener("DOMContentLoaded", function () {
-
-    const categoryButtons =
-        document.querySelectorAll(".category-btn");
+function filterCategory(category, button) {
 
     const cards =
         document.querySelectorAll(".video-card");
 
-    categoryButtons.forEach(function (button) {
+    cards.forEach(function (card) {
 
-        button.addEventListener("click", function () {
+        const cardCategory =
+            card.dataset.category;
 
-            categoryButtons.forEach(function (btn) {
+        if (
+            category === "All" ||
+            cardCategory === category
+        ) {
 
-                btn.classList.remove("active");
+            card.classList.remove("hide");
 
-            });
+        } else {
 
-            button.classList.add("active");
+            card.classList.add("hide");
 
-            const selectedCategory =
-                button.textContent.trim();
-
-            cards.forEach(function (card) {
-
-                const cardCategory =
-                    card.dataset.category;
-
-                if (
-                    selectedCategory === "All" ||
-                    cardCategory === selectedCategory
-                ) {
-
-                    card.style.display = "";
-
-                } else {
-
-                    card.style.display = "none";
-
-                }
-
-            });
-
-        });
+        }
 
     });
 
-});
-
-
-/* ==================================================
-   LIKE VIDEOS
-================================================== */
-
-function likeVideo(button, videoId) {
-
-    if (!button) return;
-
-    let likedVideos =
-        JSON.parse(
-            localStorage.getItem("hopehubLikes") || "{}"
-        );
-
-    if (likedVideos[videoId]) {
-
-        likedVideos[videoId] = false;
-
-        button.textContent = "🤍 Like";
-
-        button.classList.remove("liked");
-
-    } else {
-
-        likedVideos[videoId] = true;
-
-        button.textContent = "❤️ Liked";
-
-        button.classList.add("liked");
-
-    }
-
-    localStorage.setItem(
-        "hopehubLikes",
-        JSON.stringify(likedVideos)
-    );
-
-}
-
-
-/* Restore likes */
-
-document.addEventListener("DOMContentLoaded", function () {
-
-    const likedVideos =
-        JSON.parse(
-            localStorage.getItem("hopehubLikes") || "{}"
-        );
-
     document
-        .querySelectorAll(".like-btn")
-        .forEach(function (button) {
+        .querySelectorAll(".category-btn")
+        .forEach(function (btn) {
 
-            const onclickText =
-                button.getAttribute("onclick") || "";
-
-            const match =
-                onclickText.match(/'([^']+)'/);
-
-            if (!match) return;
-
-            const videoId = match[1];
-
-            if (likedVideos[videoId]) {
-
-                button.textContent = "❤️ Liked";
-
-                button.classList.add("liked");
-
-            }
+            btn.classList.remove("active");
 
         });
 
-});
+    if (button) {
+
+        button.classList.add("active");
+
+    }
+}
 
 
-/* ==================================================
+/* =========================================================
+   VIDEO CARD ID
+========================================================= */
+
+function getVideoIdFromLink(link) {
+
+    if (!link) return "";
+
+    try {
+
+        const url =
+            new URL(
+                link,
+                window.location.href
+            );
+
+        return (
+            url.searchParams.get("video") || ""
+        );
+
+    } catch (error) {
+
+        const match =
+            link.match(/[?&]video=([^&]+)/);
+
+        return match
+            ? decodeURIComponent(match[1])
+            : "";
+    }
+}
+
+
+/* =========================================================
+   TRACKING UI
+========================================================= */
+
+function createTrackingBox(card, videoId) {
+
+    if (!card || !videoId) return;
+
+    let box =
+        card.querySelector(".video-tracking-stats");
+
+    if (!box) {
+
+        box =
+            document.createElement("div");
+
+        box.className =
+            "video-tracking-stats";
+
+        const description =
+            card.querySelector("p");
+
+        if (description) {
+
+            description.insertAdjacentElement(
+                "afterend",
+                box
+            );
+
+        } else {
+
+            card.appendChild(box);
+
+        }
+    }
+
+    updateTrackingBox(box, videoId);
+}
+
+
+function updateTrackingBox(box, videoId) {
+
+    if (!box) return;
+
+    const stats =
+        getSingleVideoStats(videoId);
+
+    box.innerHTML = `
+        <span>👁️ ${stats.views}</span>
+        &nbsp;&nbsp;
+        <span>❤️ ${stats.likes}</span>
+        &nbsp;&nbsp;
+        <span>⭐ ${stats.favorites}</span>
+    `;
+}
+
+
+function updateAllTrackingUI() {
+
+    const cards =
+        document.querySelectorAll(".video-card");
+
+    cards.forEach(function (card) {
+
+        const link =
+            card.querySelector(
+                'a[href*="video.html?video="]'
+            );
+
+        const videoId =
+            getVideoIdFromLink(
+                link?.getAttribute("href")
+            );
+
+        if (!videoId) return;
+
+        createTrackingBox(
+            card,
+            videoId
+        );
+
+        const likeButton =
+            card.querySelector(
+                ".like-btn"
+            );
+
+        if (likeButton) {
+
+            likeButton.dataset.videoId =
+                videoId;
+
+            updateLikeButton(
+                likeButton,
+                videoId
+            );
+        }
+
+        const favoriteButton =
+            card.querySelector(
+                ".favorite-btn"
+            );
+
+        if (favoriteButton) {
+
+            favoriteButton.dataset.videoId =
+                videoId;
+
+            updateFavoriteButton(
+                favoriteButton,
+                videoId
+            );
+        }
+
+    });
+}
+
+
+/* =========================================================
+   LIKE SYSTEM
+========================================================= */
+
+function getLikes() {
+
+    try {
+
+        return JSON.parse(
+            localStorage.getItem("hopehubLikes")
+        ) || {};
+
+    } catch (error) {
+
+        return {};
+
+    }
+}
+
+
+function saveLikes(likes) {
+
+    localStorage.setItem(
+        "hopehubLikes",
+        JSON.stringify(likes)
+    );
+}
+
+
+function updateLikeButton(button, videoId) {
+
+    if (!button) return;
+
+    const likes =
+        getLikes();
+
+    const legacyId =
+        Object.keys(VIDEO_KEY_MAP)
+            .find(
+                key => VIDEO_KEY_MAP[key] === videoId
+            );
+
+    const isLiked =
+        likes[legacyId || videoId] === true;
+
+    button.innerHTML =
+        isLiked
+            ? "❤️ Liked"
+            : "🤍 Like";
+}
+
+
+function likeVideo(button, videoId) {
+
+    const canonicalId =
+        normalizeVideoId(videoId);
+
+    const likes =
+        getLikes();
+
+    const storageKey =
+        VIDEO_KEY_MAP[videoId]
+            ? videoId
+            : canonicalId;
+
+    const alreadyLiked =
+        likes[storageKey] === true;
+
+    const stats =
+        getVideoStats();
+
+    if (!stats[canonicalId]) {
+
+        stats[canonicalId] = {
+            views: 0,
+            likes: 0,
+            favorites: 0
+        };
+    }
+
+    if (alreadyLiked) {
+
+        delete likes[storageKey];
+
+        stats[canonicalId].likes =
+            Math.max(
+                0,
+                stats[canonicalId].likes - 1
+            );
+
+        trackGAEvent(
+            "video_unlike",
+            {
+                video_id: canonicalId,
+                video_title:
+                    HOPEHUB_VIDEOS[canonicalId]?.title || ""
+            }
+        );
+
+    } else {
+
+        likes[storageKey] = true;
+
+        stats[canonicalId].likes += 1;
+
+        trackGAEvent(
+            "video_like",
+            {
+                video_id: canonicalId,
+                video_title:
+                    HOPEHUB_VIDEOS[canonicalId]?.title || ""
+            }
+        );
+    }
+
+    saveLikes(likes);
+
+    saveVideoStats(stats);
+
+    updateLikeButton(
+        button,
+        canonicalId
+    );
+
+    updateAllTrackingUI();
+
+    updateVideoPageStats();
+}
+
+
+/* =========================================================
    FAVORITES
-================================================== */
+========================================================= */
+
+function getFavorites() {
+
+    try {
+
+        return JSON.parse(
+            localStorage.getItem("hopehubFavorites")
+        ) || [];
+
+    } catch (error) {
+
+        return [];
+
+    }
+}
+
+
+function saveFavorites(favorites) {
+
+    localStorage.setItem(
+        "hopehubFavorites",
+        JSON.stringify(favorites)
+    );
+}
+
+
+function isFavorite(videoId) {
+
+    const favorites =
+        getFavorites();
+
+    return favorites.some(function (item) {
+
+        return (
+            getVideoIdFromLink(item.link) ===
+            videoId
+        );
+
+    });
+}
+
+
+function updateFavoriteButton(
+    button,
+    videoId
+) {
+
+    if (!button) return;
+
+    button.innerHTML =
+        isFavorite(videoId)
+            ? "⭐ Saved"
+            : "🤍 Favorite";
+}
+
 
 function addFavorite(
     title,
@@ -633,142 +967,183 @@ function addFavorite(
     button
 ) {
 
-    let favorites =
-        JSON.parse(
-            localStorage.getItem("hopehubFavorites") || "[]"
-        );
+    const videoId =
+        getVideoIdFromLink(link);
 
-    const existing =
-        favorites.find(function (item) {
-
-            return item.link === link;
-
-        });
-
-    if (existing) {
-
-        favorites =
-            favorites.filter(function (item) {
-
-                return item.link !== link;
-
-            });
-
-        if (button) {
-
-            button.textContent =
-                "🤍 Favorite";
-
-            button.classList.remove("favorited");
-
-        }
-
-        alert("Removed from favorites.");
-
-    } else {
-
-        favorites.push({
-
-            title: title,
-            image: image,
-            link: link
-
-        });
-
-        if (button) {
-
-            button.textContent =
-                "❤️ Favorited";
-
-            button.classList.add("favorited");
-
-        }
-
-        alert("Added to favorites! ❤️");
-
-    }
-
-    localStorage.setItem(
-        "hopehubFavorites",
-        JSON.stringify(favorites)
-    );
-
-    displayFavorites();
-
-}
-
-
-/* Display favorites */
-
-function displayFavorites() {
-
-    const container =
-        document.getElementById("favoriteContainer");
-
-    if (!container) return;
-
-    const favorites =
-        JSON.parse(
-            localStorage.getItem("hopehubFavorites") || "[]"
-        );
-
-    container.innerHTML = "";
-
-    if (favorites.length === 0) {
-
-        container.innerHTML =
-            '<p class="empty-fav">No favorite videos yet.</p>';
+    if (!videoId) {
 
         return;
 
     }
 
-    favorites.forEach(function (video) {
+    const favorites =
+        getFavorites();
+
+    const existingIndex =
+        favorites.findIndex(function (item) {
+
+            return (
+                getVideoIdFromLink(item.link) ===
+                videoId
+            );
+
+        });
+
+    const stats =
+        getVideoStats();
+
+    if (!stats[videoId]) {
+
+        stats[videoId] = {
+            views: 0,
+            likes: 0,
+            favorites: 0
+        };
+    }
+
+    if (existingIndex !== -1) {
+
+        favorites.splice(
+            existingIndex,
+            1
+        );
+
+        stats[videoId].favorites =
+            Math.max(
+                0,
+                stats[videoId].favorites - 1
+            );
+
+        trackGAEvent(
+            "video_unfavorite",
+            {
+                video_id: videoId,
+                video_title:
+                    HOPEHUB_VIDEOS[videoId]?.title || title
+            }
+        );
+
+        if (button) {
+
+            updateFavoriteButton(
+                button,
+                videoId
+            );
+        }
+
+    } else {
+
+        favorites.push({
+            title: title,
+            image: image,
+            link: link
+        });
+
+        stats[videoId].favorites += 1;
+
+        trackGAEvent(
+            "video_favorite",
+            {
+                video_id: videoId,
+                video_title:
+                    HOPEHUB_VIDEOS[videoId]?.title || title
+            }
+        );
+
+        if (button) {
+
+            updateFavoriteButton(
+                button,
+                videoId
+            );
+        }
+    }
+
+    saveFavorites(favorites);
+
+    saveVideoStats(stats);
+
+    displayFavorites();
+
+    updateAllTrackingUI();
+
+    updateVideoPageStats();
+}
+
+
+function displayFavorites() {
+
+    const container =
+        document.getElementById(
+            "favoriteContainer"
+        );
+
+    if (!container) return;
+
+    const favorites =
+        getFavorites();
+
+    if (favorites.length === 0) {
+
+        container.innerHTML = `
+            <p>No favorite videos yet.</p>
+        `;
+
+        return;
+    }
+
+    container.innerHTML = "";
+
+    favorites.forEach(function (item) {
+
+        const videoId =
+            getVideoIdFromLink(
+                item.link
+            );
 
         const card =
             document.createElement("div");
 
         card.className =
-            "card favorite-card";
+            "video-card saved";
 
         card.innerHTML = `
+            <img
+                src="${item.image}"
+                alt="${item.title}"
+                loading="lazy"
+            >
 
-            <a href="${video.link}">
+            <h3>${item.title}</h3>
 
-                <div class="video-image">
-
-                    <img
-                        src="${video.image}"
-                        alt="${video.title}"
-                    >
-
-                    <div class="play-btn">
-                        ▶
-                    </div>
-
-                </div>
-
+            <a
+                href="${item.link}"
+                class="watch-btn"
+            >
+                ▶ Watch Video
             </a>
 
-            <h3>${video.title}</h3>
-
             <button
-                class="remove-favorite"
                 type="button"
+                class="remove-favorite-btn"
+                data-video-id="${videoId}"
             >
                 ❌ Remove
             </button>
-
         `;
 
         const removeButton =
-            card.querySelector(".remove-favorite");
+            card.querySelector(
+                ".remove-favorite-btn"
+            );
 
         removeButton.addEventListener(
             "click",
             function () {
 
-                removeFavorite(video.link);
+                removeFavorite(
+                    item.link
+                );
 
             }
         );
@@ -776,163 +1151,268 @@ function displayFavorites() {
         container.appendChild(card);
 
     });
-
 }
 
-
-/* Remove favorite */
 
 function removeFavorite(link) {
 
-    let favorites =
-        JSON.parse(
-            localStorage.getItem("hopehubFavorites") || "[]"
-        );
+    const videoId =
+        getVideoIdFromLink(link);
 
-    favorites =
-        favorites.filter(function (video) {
+    const favorites =
+        getFavorites();
 
-            return video.link !== link;
+    const newFavorites =
+        favorites.filter(function (item) {
+
+            return (
+                getVideoIdFromLink(item.link) !==
+                videoId
+            );
 
         });
 
-    localStorage.setItem(
-        "hopehubFavorites",
-        JSON.stringify(favorites)
-    );
+    const stats =
+        getVideoStats();
+
+    if (stats[videoId]) {
+
+        stats[videoId].favorites =
+            Math.max(
+                0,
+                stats[videoId].favorites - 1
+            );
+    }
+
+    saveFavorites(newFavorites);
+
+    saveVideoStats(stats);
 
     displayFavorites();
 
-    restoreFavoriteButtons();
+    updateAllTrackingUI();
 
+    updateVideoPageStats();
 }
 
 
-/* Restore favorite buttons */
-
 function restoreFavoriteButtons() {
-
-    const favorites =
-        JSON.parse(
-            localStorage.getItem("hopehubFavorites") || "[]"
-        );
-
-    const favoriteLinks =
-        favorites.map(function (item) {
-
-            return item.link;
-
-        });
 
     document
         .querySelectorAll(".favorite-btn")
         .forEach(function (button) {
 
-            const onclickText =
-                button.getAttribute("onclick") || "";
+            const videoId =
+                button.dataset.videoId;
 
-            const match =
-                onclickText.match(
-                    /'([^']+)'\s*,\s*'([^']+)'\s*,\s*'([^']+)'/
+            if (videoId) {
+
+                updateFavoriteButton(
+                    button,
+                    videoId
                 );
-
-            if (!match) return;
-
-            const videoLink = match[3];
-
-            if (
-                favoriteLinks.includes(videoLink)
-            ) {
-
-                button.textContent =
-                    "❤️ Favorited";
-
-                button.classList.add("favorited");
-
-            } else {
-
-                button.textContent =
-                    "🤍 Favorite";
-
-                button.classList.remove("favorited");
-
             }
 
         });
-
 }
 
 
-document.addEventListener(
-    "DOMContentLoaded",
-    function () {
+/* =========================================================
+   VIDEO VIEW TRACKING
+========================================================= */
 
-        displayFavorites();
+function recordVideoView(videoId) {
 
-        restoreFavoriteButtons();
+    if (!videoId) return;
+
+    let alreadyViewed = false;
+
+    try {
+
+        alreadyViewed =
+            sessionStorage.getItem(
+                "hopehubViewed_" + videoId
+            ) === "true";
+
+    } catch (error) {
+
+        alreadyViewed = false;
 
     }
-);
+
+    if (alreadyViewed) {
+
+        return;
+
+    }
+
+    const stats =
+        getVideoStats();
+
+    if (!stats[videoId]) {
+
+        stats[videoId] = {
+            views: 0,
+            likes: 0,
+            favorites: 0
+        };
+    }
+
+    stats[videoId].views += 1;
+
+    saveVideoStats(stats);
+
+    try {
+
+        sessionStorage.setItem(
+            "hopehubViewed_" + videoId,
+            "true"
+        );
+
+    } catch (error) {
+        // Ignore storage errors
+    }
+
+    const video =
+        HOPEHUB_VIDEOS[videoId];
+
+    trackGAEvent(
+        "video_view",
+        {
+            video_id: videoId,
+            video_title:
+                video?.title || "",
+            video_category:
+                video?.category || ""
+        }
+    );
+
+    updateAllTrackingUI();
+
+    updateVideoPageStats();
+}
 
 
-/* ==================================================
-   STATISTICS COUNTERS
-================================================== */
+/* =========================================================
+   VIDEO PAGE STATS
+========================================================= */
+
+function updateVideoPageStats() {
+
+    const statsElement =
+        document.getElementById(
+            "videoStats"
+        );
+
+    const videoId =
+        window.currentHopeHubVideoId;
+
+    if (!statsElement || !videoId) return;
+
+    const stats =
+        getSingleVideoStats(videoId);
+
+    statsElement.innerHTML = `
+        <span>👁️ ${stats.views} Views</span>
+        &nbsp;&nbsp;|&nbsp;&nbsp;
+        <span>❤️ ${stats.likes} Likes</span>
+        &nbsp;&nbsp;|&nbsp;&nbsp;
+        <span>⭐ ${stats.favorites} Favorites</span>
+    `;
+
+    const likeButton =
+        document.getElementById(
+            "videoLikeBtn"
+        );
+
+    const favoriteButton =
+        document.getElementById(
+            "videoFavoriteBtn"
+        );
+
+    if (likeButton) {
+
+        updateLikeButton(
+            likeButton,
+            videoId
+        );
+    }
+
+    if (favoriteButton) {
+
+        updateFavoriteButton(
+            favoriteButton,
+            videoId
+        );
+    }
+}
+
+
+/* =========================================================
+   STATS COUNTERS
+========================================================= */
 
 function startCounters() {
 
     const counters =
-        document.querySelectorAll(".counter");
+        document.querySelectorAll(
+            ".counter"
+        );
 
     counters.forEach(function (counter) {
 
         const target =
-            Number(counter.dataset.target);
-
-        if (!target) return;
+            Number(
+                counter.dataset.target ||
+                counter.textContent ||
+                0
+            );
 
         let current = 0;
 
         const increment =
-            Math.max(1, Math.ceil(target / 100));
+            Math.max(
+                1,
+                Math.ceil(target / 100)
+            );
 
-        const timer =
-            setInterval(function () {
+        function update() {
 
-                current += increment;
+            current += increment;
 
-                if (current >= target) {
-
-                    current = target;
-
-                    clearInterval(timer);
-
-                }
+            if (current >= target) {
 
                 counter.textContent =
-                    current.toLocaleString();
+                    target;
 
-            }, 20);
+                return;
+
+            }
+
+            counter.textContent =
+                current;
+
+            requestAnimationFrame(
+                update
+            );
+        }
+
+        update();
 
     });
-
 }
 
 
-document.addEventListener(
-    "DOMContentLoaded",
-    startCounters
-);
-
-
-/* ==================================================
+/* =========================================================
    TESTIMONIAL SLIDER
-================================================== */
+========================================================= */
 
-document.addEventListener("DOMContentLoaded", function () {
+function initTestimonials() {
 
     const testimonials =
-        document.querySelectorAll(".testimonial-card");
+        document.querySelectorAll(
+            ".testimonial"
+        );
 
     if (testimonials.length <= 1) return;
 
@@ -940,35 +1420,39 @@ document.addEventListener("DOMContentLoaded", function () {
 
     testimonials.forEach(function (item, index) {
 
-        item.classList.toggle(
-            "active",
+        item.style.display =
             index === 0
-        );
+                ? "block"
+                : "none";
 
     });
 
     setInterval(function () {
 
-        testimonials[current].classList.remove("active");
+        testimonials[current].style.display =
+            "none";
 
         current =
-            (current + 1) % testimonials.length;
+            (current + 1) %
+            testimonials.length;
 
-        testimonials[current].classList.add("active");
+        testimonials[current].style.display =
+            "block";
 
-    }, 4000);
+    }, 5000);
+}
 
-});
 
+/* =========================================================
+   FAQ
+========================================================= */
 
-/* ==================================================
-   FAQ ACCORDION
-================================================== */
-
-document.addEventListener("DOMContentLoaded", function () {
+function initFAQ() {
 
     const questions =
-        document.querySelectorAll(".faq-question");
+        document.querySelectorAll(
+            ".faq-question"
+        );
 
     questions.forEach(function (question) {
 
@@ -976,100 +1460,62 @@ document.addEventListener("DOMContentLoaded", function () {
             "click",
             function () {
 
-                const answer =
-                    question.nextElementSibling;
+                const item =
+                    question.parentElement;
 
-                if (!answer) return;
-
-                const isOpen =
-                    answer.classList.contains("open");
-
-                /* Close all answers */
-
-                document
-                    .querySelectorAll(".faq-answer")
-                    .forEach(function (item) {
-
-                        item.classList.remove("open");
-
-                        item.style.maxHeight = null;
-
-                    });
-
-                document
-                    .querySelectorAll(".faq-question span")
-                    .forEach(function (span) {
-
-                        span.textContent = "+";
-
-                    });
-
-                /* Open selected answer */
-
-                if (!isOpen) {
-
-                    answer.classList.add("open");
-
-                    answer.style.maxHeight =
-                        answer.scrollHeight + "px";
-
-                    const span =
-                        question.querySelector("span");
-
-                    if (span) {
-                        span.textContent = "−";
-                    }
-
-                }
+                item.classList.toggle(
+                    "active"
+                );
 
             }
         );
 
     });
+}
 
-});
 
-
-/* ==================================================
+/* =========================================================
    CONTACT FORM
-================================================== */
+========================================================= */
 
-document.addEventListener("DOMContentLoaded", function () {
+function initContactForm() {
 
-    const contactForm =
-        document.getElementById("contactForm");
+    const form =
+        document.getElementById(
+            "contactForm"
+        );
 
-    if (!contactForm) return;
+    if (!form) return;
 
-    contactForm.addEventListener(
+    form.addEventListener(
         "submit",
         function (event) {
 
             event.preventDefault();
 
             const name =
-                document.getElementById("contactName");
+                document.getElementById(
+                    "contactName"
+                )?.value.trim();
 
             const email =
-                document.getElementById("contactEmail");
+                document.getElementById(
+                    "contactEmail"
+                )?.value.trim();
 
             const message =
-                document.getElementById("contactMessage");
+                document.getElementById(
+                    "contactMessage"
+                )?.value.trim();
 
             if (
                 !name ||
                 !email ||
                 !message
-            ) return;
-
-            if (
-                !name.value.trim() ||
-                !email.value.trim() ||
-                !message.value.trim()
             ) {
 
                 alert(
-                    "Please fill in all fields."
+                    "Please fill all fields."
                 );
 
                 return;
@@ -1077,38 +1523,37 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
             alert(
-                "Thank you, " +
-                name.value.trim() +
-                "! Your message has been received. 💙"
+                "Thank you! Your message has been received."
             );
 
-            contactForm.reset();
+            form.reset();
 
         }
     );
+}
 
-});
 
+/* =========================================================
+   NEWSLETTER
+========================================================= */
 
-/* ==================================================
-   NEWSLETTER FORM
-================================================== */
+function initNewsletter() {
 
-document.addEventListener("DOMContentLoaded", function () {
+    const form =
+        document.querySelector(
+            ".newsletter-form"
+        );
 
-    const newsletterForm =
-        document.querySelector(".newsletter-form");
+    if (!form) return;
 
-    if (!newsletterForm) return;
-
-    newsletterForm.addEventListener(
+    form.addEventListener(
         "submit",
         function (event) {
 
             event.preventDefault();
 
             const emailInput =
-                newsletterForm.querySelector(
+                form.querySelector(
                     'input[type="email"]'
                 );
 
@@ -1127,44 +1572,334 @@ document.addEventListener("DOMContentLoaded", function () {
 
             }
 
-            localStorage.setItem(
-                "hopehubSubscriber",
-                email
-            );
+            let subscribers = [];
+
+            try {
+
+                subscribers =
+                    JSON.parse(
+                        localStorage.getItem(
+                            "hopehubSubscribers"
+                        )
+                    ) || [];
+
+            } catch (error) {
+
+                subscribers = [];
+
+            }
+
+            if (
+                !subscribers.includes(email)
+            ) {
+
+                subscribers.push(email);
+
+                localStorage.setItem(
+                    "hopehubSubscribers",
+                    JSON.stringify(
+                        subscribers
+                    )
+                );
+            }
 
             alert(
-                "Thank you for subscribing! 💙"
+                "Thank you for subscribing!"
             );
 
-            newsletterForm.reset();
+            form.reset();
+
+        }
+    );
+}
+
+
+/* =========================================================
+   BACK TO TOP
+========================================================= */
+
+function initBackToTop() {
+
+    const topButton =
+        document.getElementById(
+            "topBtn"
+        );
+
+    if (!topButton) return;
+
+    window.addEventListener(
+        "scroll",
+        function () {
+
+            if (window.scrollY > 400) {
+
+                topButton.style.display =
+                    "block";
+
+            } else {
+
+                topButton.style.display =
+                    "none";
+
+            }
 
         }
     );
 
-});
+    topButton.addEventListener(
+        "click",
+        function () {
+
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+
+        }
+    );
+}
 
 
-/* ==================================================
-   BACK TO TOP BUTTON
-================================================== */
+/* =========================================================
+   VIDEO PAGE
+========================================================= */
 
-const topButton =
-    document.getElementById("topBtn");
+function initVideoPage() {
+
+    const iframe =
+        document.getElementById(
+            "youtubeVideo"
+        );
+
+    if (!iframe) return;
+
+    const params =
+        new URLSearchParams(
+            window.location.search
+        );
+
+    const videoId =
+        params.get("video");
+
+    const video =
+        HOPEHUB_VIDEOS[videoId];
+
+    const titleElement =
+        document.getElementById(
+            "videoTitle"
+        );
+
+    const descriptionElement =
+        document.getElementById(
+            "videoDescription"
+        );
+
+    if (!videoId || !video) {
+
+        iframe.style.display =
+            "none";
+
+        if (titleElement) {
+
+            titleElement.textContent =
+                "Video Not Found";
+
+        }
+
+        if (descriptionElement) {
+
+            descriptionElement.textContent =
+                "The requested video could not be found.";
+
+        }
+
+        return;
+    }
+
+    window.currentHopeHubVideoId =
+        videoId;
+
+    iframe.src =
+        `https://www.youtube.com/embed/${videoId}?rel=0`;
+
+    iframe.title =
+        video.title;
+
+    if (titleElement) {
+
+        titleElement.textContent =
+            video.title;
+
+    }
+
+    if (descriptionElement) {
+
+        descriptionElement.textContent =
+            video.description;
+
+    }
+
+    document.title =
+        `${video.title} | HopeHub`;
+
+    const likeButton =
+        document.getElementById(
+            "videoLikeBtn"
+        );
+
+    if (likeButton) {
+
+        likeButton.dataset.videoId =
+            videoId;
+
+        likeButton.onclick =
+            function () {
+
+                likeVideo(
+                    likeButton,
+                    videoId
+                );
+
+            };
+    }
+
+    const favoriteButton =
+        document.getElementById(
+            "videoFavoriteBtn"
+        );
+
+    if (favoriteButton) {
+
+        favoriteButton.dataset.videoId =
+            videoId;
+
+        favoriteButton.onclick =
+            function () {
+
+                addFavorite(
+                    video.title,
+                    video.image,
+                    `video.html?video=${videoId}`,
+                    favoriteButton
+                );
+
+            };
+    }
+
+    recordVideoView(videoId);
+
+    updateVideoPageStats();
+
+    displayFavorites();
+}
 
 
-window.addEventListener(
-    "scroll",
+/* =========================================================
+   DOM READY
+========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
     function () {
 
-        if (!topButton) return;
+        /* Theme */
+        applySavedTheme();
 
-        if (window.scrollY > 400) {
+        /* Login */
+        const loginButton =
+            document.querySelector(
+                ".login-btn"
+            );
 
-            topButton.classList.add("show");
+        if (loginButton) {
 
-        } else {
+            loginButton.addEventListener(
+                "click",
+                openAuth
+            );
 
-            topButton.classList.remove("show");
+        }
+
+        updateLoginButton();
+
+        /* Mobile navigation */
+        const navLinks =
+            document.getElementById(
+                "navLinks"
+            );
+
+        if (navLinks) {
+
+            navLinks
+                .querySelectorAll("a")
+                .forEach(function (link) {
+
+                    link.addEventListener(
+                        "click",
+                        function () {
+
+                            navLinks.classList.remove(
+                                "active"
+                            );
+
+                        }
+                    );
+
+                });
+
+        }
+
+        /* Quote */
+        showRandomQuote();
+
+        /* Favorites */
+        displayFavorites();
+
+        /* Tracking */
+        updateAllTrackingUI();
+
+        restoreFavoriteButtons();
+
+        /* Counters */
+        startCounters();
+
+        /* Other features */
+        initTestimonials();
+
+        initFAQ();
+
+        initContactForm();
+
+        initNewsletter();
+
+        initBackToTop();
+
+        /* Video page */
+        initVideoPage();
+
+        /* Close auth */
+        const overlay =
+            document.getElementById(
+                "authOverlay"
+            );
+
+        if (overlay) {
+
+            overlay.addEventListener(
+                "click",
+                function (event) {
+
+                    if (
+                        event.target ===
+                        overlay
+                    ) {
+
+                        closeAuth();
+
+                    }
+
+                }
+            );
 
         }
 
@@ -1172,112 +1907,69 @@ window.addEventListener(
 );
 
 
-function goTop() {
-
-    window.scrollTo({
-
-        top: 0,
-
-        behavior: "smooth"
-
-    });
-
-}
-
-
-/* ==================================================
-   CLOSE AUTH WHEN CLICKING OUTSIDE
-================================================== */
-
-document.addEventListener("click", function (event) {
-
-    const overlay =
-        document.getElementById("authOverlay");
-
-    if (!overlay) return;
-
-    if (
-        event.target === overlay
-    ) {
-
-        closeAuth();
-
-    }
-
-});
-
-
-/* ==================================================
+/* =========================================================
    ESCAPE KEY
-================================================== */
+========================================================= */
 
-document.addEventListener("keydown", function (event) {
+document.addEventListener(
+    "keydown",
+    function (event) {
 
-    if (event.key === "Escape") {
+        if (event.key === "Escape") {
 
-        closeAuth();
+            closeAuth();
+
+        }
 
     }
+);
 
-});
 
-
-/* ==================================================
+/* =========================================================
    SMOOTH SCROLL
-================================================== */
+========================================================= */
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener(
+    "click",
+    function (event) {
 
-    const anchors =
-        document.querySelectorAll(
-            'a[href^="#"]'
-        );
+        const link =
+            event.target.closest(
+                'a[href^="#"]'
+            );
 
-    anchors.forEach(function (anchor) {
+        if (!link) return;
 
-        anchor.addEventListener(
-            "click",
-            function (event) {
+        const targetId =
+            link.getAttribute("href");
 
-                const targetId =
-                    anchor.getAttribute("href");
+        if (
+            !targetId ||
+            targetId === "#"
+        ) {
 
-                if (
-                    !targetId ||
-                    targetId === "#"
-                ) {
-                    return;
-                }
+            return;
 
-                const target =
-                    document.querySelector(targetId);
+        }
 
-                if (target) {
+        const target =
+            document.querySelector(
+                targetId
+            );
 
-                    event.preventDefault();
+        if (!target) return;
 
-                    target.scrollIntoView({
+        event.preventDefault();
 
-                        behavior: "smooth",
+        target.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
 
-                        block: "start"
+    }
+);
 
-                    });
-
-                }
-
-            }
-        );
-
-    });
-
-});
-
-
-/* ==================================================
-   CONSOLE MESSAGE
-================================================== */
 
 console.log(
-    "HopeHub JavaScript Loaded Successfully ❤️"
+    "HopeHub JavaScript loaded successfully."
 );
