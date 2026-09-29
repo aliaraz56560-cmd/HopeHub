@@ -1103,9 +1103,8 @@ function displayFavorites() {
 
         const card =
             document.createElement("div");
-
-        card.className =
-            "video-card saved";
+card.className =
+    "video-card saved favorite-card";
 
         card.innerHTML = `
             <img
@@ -1973,3 +1972,34 @@ document.addEventListener(
 console.log(
     "HopeHub JavaScript loaded successfully."
 );
+/* =========================================
+   GOOGLE ANALYTICS TRACKING
+========================================= */
+
+// Track Video Open
+function trackVideoOpen(videoId, videoTitle) {
+    if (typeof gtag === "function") {
+        gtag("event", "video_open", {
+            video_id: videoId,
+            video_title: videoTitle
+        });
+    }
+}
+
+// Track Like
+function trackLike(videoId) {
+    if (typeof gtag === "function") {
+        gtag("event", "video_like", {
+            video_id: videoId
+        });
+    }
+}
+
+// Track Favorite
+function trackFavorite(videoId) {
+    if (typeof gtag === "function") {
+        gtag("event", "video_favorite", {
+            video_id: videoId
+        });
+    }
+}
