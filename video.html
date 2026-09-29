@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,6 +11,26 @@
     >
 
     <title>HopeHub ❤️</title>
+
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-SEE5Y2HSH1"></script>
+
+    <script>
+
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
+        gtag("js", new Date());
+
+        gtag("config", "G-SEE5Y2HSH1");
+
+    </script>
+    <!-- End Google Analytics -->
+
 
     <link
         rel="preconnect"
@@ -414,9 +433,19 @@
             <a href="index.html#contact">
                 Contact
             </a>
-<a href="privacy.html">🔒 Privacy Policy</a>
-<a href="terms.html">📄 Terms & Conditions</a>
-<a href="disclaimer.html">⚠️ Disclaimer</a>
+
+            <a href="privacy.html">
+                🔒 Privacy Policy
+            </a>
+
+            <a href="terms.html">
+                📄 Terms & Conditions
+            </a>
+
+            <a href="disclaimer.html">
+                ⚠️ Disclaimer
+            </a>
+
         </div>
 
 
@@ -477,6 +506,7 @@
 ========================================= -->
 
 <script>
+
 
 /* =========================================
    VIDEO DATABASE
@@ -621,6 +651,24 @@ if (
         " | HopeHub ❤️";
 
 
+    /* =====================================
+       GOOGLE ANALYTICS
+       VIDEO OPEN TRACKING
+    ===================================== */
+
+    if (typeof gtag === "function") {
+
+        gtag("event", "video_open", {
+
+            video_id: videoId,
+
+            video_title: video.title
+
+        });
+
+    }
+
+
 } else {
 
 
@@ -705,10 +753,10 @@ navLinks.forEach(function (link) {
 
 });
 
+
 </script>
 
 
 </body>
 
 </html>
-```
