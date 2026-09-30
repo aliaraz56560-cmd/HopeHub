@@ -2174,3 +2174,219 @@ body.light .video-details p {
         font-size: 21px;
     }
 }
+/* ==================================================
+   INSPIRATION ARTICLES
+================================================== */
+
+.articles {
+    padding: 80px 6%;
+    background: #020617;
+}
+
+.articles h2 {
+    text-align: center;
+    font-size: 34px;
+    margin-bottom: 12px;
+}
+
+.articles-intro {
+    max-width: 700px;
+    margin: 0 auto 40px;
+    text-align: center;
+    color: #94a3b8;
+    line-height: 1.7;
+}
+
+.article-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 28px;
+    max-width: 1200px;
+    margin: auto;
+}
+
+.article-card {
+    padding: 30px 25px;
+    border-radius: 18px;
+    background: #0f172a;
+    border: 1px solid rgba(255,255,255,0.07);
+    box-shadow: 0 12px 35px rgba(0,0,0,0.2);
+    transition: 0.3s ease;
+}
+
+.article-card:hover {
+    transform: translateY(-7px);
+    border-color: rgba(59,130,246,0.4);
+    box-shadow: 0 20px 45px rgba(0,0,0,0.3);
+}
+
+.article-icon {
+    font-size: 42px;
+    margin-bottom: 18px;
+}
+
+.article-card h3 {
+    font-size: 20px;
+    line-height: 1.4;
+    margin-bottom: 12px;
+}
+
+.article-card p {
+    color: #94a3b8;
+    line-height: 1.7;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.article-card a {
+    display: inline-block;
+    padding: 9px 16px;
+    border-radius: 20px;
+    background: #2563eb;
+    color: white;
+    font-size: 13px;
+    transition: 0.3s ease;
+}
+
+.article-card a:hover {
+    background: #1d4ed8;
+    transform: translateY(-2px);
+}
+
+
+/* ==================================================
+   ARTICLE PAGE
+================================================== */
+
+.article-page {
+    min-height: 100vh;
+    padding: 120px 20px 70px;
+    background: #020617;
+}
+
+.article-content {
+    width: 100%;
+    max-width: 850px;
+    margin: auto;
+    padding: 45px;
+    border-radius: 20px;
+    background: #0f172a;
+    border: 1px solid rgba(255,255,255,0.07);
+    box-shadow: 0 15px 45px rgba(0,0,0,0.25);
+}
+
+.article-page-icon {
+    text-align: center;
+    font-size: 55px;
+    margin-bottom: 15px;
+}
+
+.article-content h1 {
+    text-align: center;
+    font-size: 38px;
+    line-height: 1.3;
+    margin-bottom: 20px;
+}
+
+.article-intro {
+    text-align: center;
+    color: #94a3b8;
+    font-size: 17px;
+    line-height: 1.8;
+    margin-bottom: 45px;
+}
+
+.article-content h2 {
+    color: #60a5fa;
+    font-size: 25px;
+    margin-top: 35px;
+    margin-bottom: 12px;
+}
+
+.article-content p {
+    color: #cbd5e1;
+    font-size: 16px;
+    line-height: 1.9;
+    margin-bottom: 18px;
+}
+
+.article-message {
+    margin: 35px 0;
+    padding: 22px;
+    border-left: 4px solid #2563eb;
+    border-radius: 10px;
+    background: rgba(37,99,235,0.10);
+    color: #e2e8f0;
+    line-height: 1.7;
+}
+
+.article-buttons {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 45px;
+}
+
+
+/* ==================================================
+   ARTICLES — MOBILE
+================================================== */
+
+@media (max-width: 1000px) {
+
+    .article-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+}
+
+
+@media (max-width: 768px) {
+
+    .articles {
+        padding: 65px 5%;
+    }
+
+    .articles h2 {
+        font-size: 29px;
+    }
+
+    .article-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .article-page {
+        padding: 100px 15px 50px;
+    }
+
+    .article-content {
+        padding: 30px 22px;
+    }
+
+    .article-content h1 {
+        font-size: 29px;
+    }
+
+    .article-content h2 {
+        font-size: 22px;
+    }
+
+    .article-content p {
+        font-size: 15px;
+    }
+
+    .article-intro {
+        font-size: 15px;
+    }
+
+    .article-buttons {
+        flex-direction: column;
+    }
+
+    .article-buttons .btn {
+        text-align: center;
+    }
+
+}
