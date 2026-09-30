@@ -1103,7 +1103,7 @@ function displayFavorites() {
 
         const card =
             document.createElement("div");
-card.className =
+ card.className =
     "video-card saved favorite-card";
 
         card.innerHTML = `
@@ -1214,7 +1214,48 @@ function restoreFavoriteButtons() {
 
         });
 }
+/* =========================================================
+   ARTICLE VIEW TRACKING
+========================================================= */
 
+function trackArticleView() {
+
+    const articlePath =
+        window.location.pathname;
+
+    const articleNames = {
+
+        "/HopeHub/article-keep-going.html":
+            "How to Keep Going When Life Feels Difficult",
+
+        "/HopeHub/article-5-small-things.html":
+            "5 Small Things That Can Give You Hope",
+
+        "/HopeHub/article-worst-day.html":
+            "You Are Not Your Worst Day"
+
+    };
+
+    const articleTitle =
+        articleNames[articlePath];
+
+    if (!articleTitle) return;
+
+    if (typeof gtag === "function") {
+
+        gtag("event", "article_view", {
+
+            article_title:
+                articleTitle,
+
+            article_path:
+                articlePath
+
+        });
+
+    }
+
+}
 
 /* =========================================================
    VIDEO VIEW TRACKING
@@ -2003,3 +2044,4 @@ function trackFavorite(videoId) {
         });
     }
 }
+trackArticleView();
